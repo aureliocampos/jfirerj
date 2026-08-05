@@ -1,0 +1,38 @@
+---
+import {
+  whatsappUrl,
+  type WhatsAppMessageKey,
+} from "../config/site.ts";
+
+interface Props {
+  messageKey: WhatsAppMessageKey;
+  class?: string;
+  variant?: "primary" | "outline-light" | "outline-dark";
+  ariaLabel?: string;
+}
+
+const {
+  messageKey,
+  class: className,
+  variant = "primary",
+  ariaLabel,
+} = Astro.props;
+
+const href = whatsappUrl(messageKey);
+const variantClass =
+  variant === "primary"
+    ? "btn--primary"
+    : variant === "outline-light"
+      ? "btn--outline-light"
+      : "btn--outline-dark";
+---
+
+<a
+  href={href}
+  class:list={["btn", variantClass, className]}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label={ariaLabel}
+>
+  <slot />
+</a>

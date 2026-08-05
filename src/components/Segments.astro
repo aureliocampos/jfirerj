@@ -1,0 +1,111 @@
+---
+import SectionKicker from "./SectionKicker.astro";
+import WhatsAppLink from "./WhatsAppLink.astro";
+import { segments } from "../data/segments.ts";
+
+const segmentIcons = {
+  building: `<path d="M4 20V8l8-4 8 4v12" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M9 20v-6h6v6" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M9 10h1M14 10h1M9 14h1M14 14h1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`,
+  factory: `<path d="M3 20h18M5 20V10l4-2v12M13 20V6l6-3v17" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/><path d="M9 14h1M9 17h1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`,
+};
+---
+
+<section class="segments section section--dark" aria-labelledby="segments-title">
+  <div class="container">
+    <SectionKicker label="Para cada tipo de imóvel" variant="dark" />
+    <h2 id="segments-title" class="segments__title">Soluções sob medida para o seu perfil</h2>
+
+    <div class="segments__grid">
+      {
+        segments.map((segment) => (
+          <article id={segment.anchor} class="segments__col">
+            <div class="segments__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" set:html={segmentIcons[segment.icon]} />
+            </div>
+            <h3 class="segments__col-title">{segment.title}</h3>
+            <p class="segments__context">{segment.context}</p>
+            <ul class="segments__bullets">
+              {segment.bullets.map((bullet) => (
+                <li class="segments__bullet">{bullet}</li>
+              ))}
+            </ul>
+            <WhatsAppLink
+              messageKey={segment.whatsappKey}
+              ariaLabel={`${segment.ctaLabel} pelo WhatsApp`}
+            >
+              {segment.ctaLabel}
+            </WhatsAppLink>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .segments__title {
+    font-size: var(--fs-h2);
+    font-weight: 800;
+    color: var(--jf-text-inv);
+    margin-bottom: var(--jf-space-xl);
+    max-width: 36rem;
+  }
+
+  .segments__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--jf-space-xl);
+  }
+
+  .segments__col {
+    padding: var(--jf-space-lg);
+    border: 1px solid var(--jf-border-dark);
+    border-radius: var(--jf-radius-sm);
+    background-color: var(--jf-graphite-900);
+  }
+
+  .segments__icon {
+    color: var(--jf-flame-500);
+    margin-bottom: var(--jf-space-md);
+  }
+
+  .segments__col-title {
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    color: var(--jf-text-inv);
+    margin-bottom: var(--jf-space-sm);
+  }
+
+  .segments__context {
+    color: var(--jf-text-inv-mut);
+    margin-bottom: var(--jf-space-md);
+  }
+
+  .segments__bullets {
+    margin-bottom: var(--jf-space-lg);
+  }
+
+  .segments__bullet {
+    position: relative;
+    padding-left: 1.25rem;
+    color: var(--jf-text-inv-mut);
+    font-size: 0.9375rem;
+    margin-bottom: var(--jf-space-sm);
+  }
+
+  .segments__bullet::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    background-color: var(--jf-fire-500);
+    border-radius: var(--jf-radius-sm);
+  }
+
+  @media (min-width: 768px) {
+    .segments__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

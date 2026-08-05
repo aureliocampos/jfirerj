@@ -1,0 +1,201 @@
+---
+import { Image } from "astro:assets";
+import WhatsAppLink from "./WhatsAppLink.astro";
+import logo from "../assets/brand/jfire-logo.jpg";
+
+const navLinks = [
+  { href: "#servicos", label: "Serviços" },
+  { href: "#condominios", label: "Condomínios" },
+  { href: "#empresas", label: "Empresas" },
+  { href: "#contato", label: "Contato" },
+];
+---
+
+<header class="header">
+  <div class="header__inner container">
+    <a href="#" class="header__logo" aria-label="JFIRE — início">
+      <Image src={logo} alt="JFIRE" height={36} densities={[1, 2]} loading="eager" fetchpriority="high" />
+    </a>
+
+    <button
+      class="header__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="main-nav"
+      aria-label="Abrir menu de navegação"
+      data-menu-toggle
+    >
+      <span class="header__toggle-bar" aria-hidden="true"></span>
+      <span class="header__toggle-bar" aria-hidden="true"></span>
+      <span class="header__toggle-bar" aria-hidden="true"></span>
+    </button>
+
+    <nav id="main-nav" class="header__nav" data-menu-nav aria-label="Navegação principal">
+      <ul class="header__nav-list">
+        {
+          navLinks.map((link) => (
+            <li>
+              <a href={link.href} class="header__nav-link">
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <WhatsAppLink
+        messageKey="header"
+        class="header__cta"
+        ariaLabel="Fale conosco pelo WhatsApp"
+      >
+        Fale conosco
+      </WhatsAppLink>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+  const nav = document.querySelector<HTMLElement>("[data-menu-nav]");
+
+  toggle?.addEventListener("click", () => {
+    const expanded = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!expanded));
+    toggle.setAttribute(
+      "aria-label",
+      expanded ? "Abrir menu de navegação" : "Fechar menu de navegação",
+    );
+    nav?.classList.toggle("is-open");
+    document.body.classList.toggle("menu-open", !expanded);
+  });
+
+  nav?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      toggle?.setAttribute("aria-expanded", "false");
+      toggle?.setAttribute("aria-label", "Abrir menu de navegação");
+      nav?.classList.remove("is-open");
+      document.body.classList.remove("menu-open");
+    });
+  });
+</script>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--jf-ink);
+    border-bottom: 1px solid var(--jf-border-dark);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--jf-space-md);
+    min-height: 4rem;
+  }
+
+  .header__logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .header__logo :global(img) {
+    height: 2.25rem;
+    width: auto;
+    border-radius: var(--jf-radius-sm);
+  }
+
+  .header__toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .header__toggle-bar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--jf-text-inv);
+    transition: transform 0.2s, opacity 0.2s;
+  }
+
+  .header__nav {
+    display: none;
+    align-items: center;
+    gap: var(--jf-space-lg);
+  }
+
+  .header__nav.is-open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: var(--jf-space-lg) var(--jf-container-pad);
+    background-color: var(--jf-ink);
+    border-bottom: 1px solid var(--jf-border-dark);
+  }
+
+  .header__nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--jf-space-md);
+    width: 100%;
+  }
+
+  .header__nav-link {
+    font-weight: 500;
+    color: var(--jf-text-inv-mut);
+    transition: color 0.2s;
+  }
+
+  .header__nav-link:hover,
+  .header__nav-link:focus-visible {
+    color: var(--jf-text-inv);
+  }
+
+  .header__cta {
+    width: 100%;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 768px) {
+    .header__toggle {
+      display: none;
+    }
+
+    .header__nav {
+      display: flex;
+      flex-direction: row;
+      position: static;
+      padding: 0;
+      border: none;
+    }
+
+    .header__nav-list {
+      flex-direction: row;
+      align-items: center;
+      width: auto;
+      gap: var(--jf-space-lg);
+    }
+
+    .header__cta {
+      width: auto;
+    }
+  }
+</style>
+
+<style is:global>
+  body.menu-open {
+    overflow: hidden;
+  }
+</style>
