@@ -1,12 +1,27 @@
 ---
+import { Image } from "astro:assets";
 import SectionKicker from "./SectionKicker.astro";
 import WhatsAppLink from "./WhatsAppLink.astro";
+import heroImage from "../assets/placeholders/hero.jpg";
 ---
 
-<section
-  class="hero section--dark diagonal-bottom blueprint-bg"
-  aria-labelledby="hero-title"
->
+<!--
+  TODO(cliente): substituir por foto real do Hero (bombeiro/técnico em
+  ação ou sistema instalado). Placeholder atual: sala de bombas de
+  hidrante, foto "Fire Pump Room, Brisbane" (Wikimedia Commons,
+  CC BY-SA 4.0, autor: Bidgee) — usada só até a foto real chegar.
+-->
+<section class="hero section--dark diagonal-bottom" aria-labelledby="hero-title">
+  <Image
+    src={heroImage}
+    alt=""
+    class="hero__bg"
+    widths={[480, 768, 1280, 1920]}
+    sizes="100vw"
+    quality={35}
+    loading="eager"
+    fetchpriority="high"
+  />
   <div class="hero__overlay" aria-hidden="true"></div>
   <div class="hero__content container">
     <SectionKicker
@@ -33,7 +48,6 @@ import WhatsAppLink from "./WhatsAppLink.astro";
       </a>
     </div>
   </div>
-  <!-- TODO(cliente): substituir por foto real do Hero -->
 </section>
 
 <style>
@@ -44,6 +58,15 @@ import WhatsAppLink from "./WhatsAppLink.astro";
     align-items: center;
     padding-block: var(--jf-space-2xl);
     background-color: var(--jf-graphite-900);
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 60%;
   }
 
   .hero__overlay {
