@@ -7,20 +7,14 @@ interface Props {
 const { label, variant = "light" } = Astro.props;
 ---
 
-<p class:list={["section-kicker", `section-kicker--${variant}`]}>
-  <span class="section-kicker__stripe" aria-hidden="true"></span>
-  {label}
-</p>
+<p class:list={["section-kicker", `section-kicker--${variant}`]}>{label}</p>
 
 <style>
   .section-kicker {
-    display: flex;
-    align-items: center;
-    gap: var(--jf-space-sm);
     margin-bottom: var(--jf-space-md);
     font-family: var(--jf-font-mono);
     font-size: var(--fs-kicker);
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
   }
@@ -31,19 +25,5 @@ const { label, variant = "light" } = Astro.props;
 
   .section-kicker--dark {
     color: var(--jf-flame-500);
-  }
-
-  .section-kicker__stripe {
-    display: inline-block;
-    width: 24px;
-    height: 3px;
-    background: repeating-linear-gradient(
-      -45deg,
-      var(--jf-stripe-yellow),
-      var(--jf-stripe-yellow) 3px,
-      var(--jf-stripe-black) 3px,
-      var(--jf-stripe-black) 6px
-    );
-    flex-shrink: 0;
   }
 </style>

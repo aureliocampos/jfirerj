@@ -63,10 +63,12 @@ h4 {
   font-family: var(--jf-font-display);
   line-height: 1.15;
   margin: 0;
+  text-wrap: balance;
 }
 
 p {
   margin: 0;
+  text-wrap: pretty;
 }
 
 ul {
@@ -81,6 +83,18 @@ ul {
   max-width: var(--jf-container-max);
   margin-inline: auto;
   padding-inline: var(--jf-container-pad);
+}
+
+/* Cabeçalho de seção centralizado (kicker + h2 + linha de apoio opcional) */
+.section-header {
+  text-align: center;
+  max-width: 44rem;
+  margin-inline: auto;
+  margin-bottom: var(--jf-space-xl);
+}
+
+.section-header > :last-child {
+  margin-bottom: 0;
 }
 
 .section {
@@ -128,20 +142,25 @@ ul {
   border: 2px solid transparent;
   border-radius: var(--jf-radius-md);
   cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
   text-align: center;
 }
 
 .btn--primary {
-  background-color: var(--jf-fire-500);
+  background-color: var(--jf-ember-700);
   color: var(--jf-on-brand);
-  border-color: var(--jf-fire-500);
+  border-color: var(--jf-ember-700);
 }
 
 .btn--primary:hover,
 .btn--primary:focus-visible {
-  background-color: var(--jf-fire-600);
-  border-color: var(--jf-fire-600);
+  background-color: var(--jf-ember-800);
+  border-color: var(--jf-ember-800);
+  transform: translateY(-1px);
+}
+
+.btn--primary:active {
+  transform: translateY(0);
 }
 
 .btn--outline-light {
@@ -180,11 +199,37 @@ ul {
   background-size: 80px 80px;
 }
 
-/* Corte diagonal entre seções */
+/* Corte diagonal entre seções — implementado como um triângulo decorativo
+   (pseudo-elemento) que se sobrepõe ao vizinho, na mesma cor de fundo da
+   seção. O conteúdo real nunca é clipado (evita cortar texto/imagem). */
 .diagonal-bottom {
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 3vw), 0 100%);
+  position: relative;
+}
+
+.diagonal-bottom::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(-1 * var(--jf-diagonal) + 1px);
+  height: var(--jf-diagonal);
+  background-color: inherit;
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+  pointer-events: none;
 }
 
 .diagonal-top {
-  clip-path: polygon(0 3vw, 100% 0, 100% 100%, 0 100%);
+  position: relative;
+}
+
+.diagonal-top::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(-1 * var(--jf-diagonal) + 1px);
+  height: var(--jf-diagonal);
+  background-color: inherit;
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  pointer-events: none;
 }

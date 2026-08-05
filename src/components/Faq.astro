@@ -6,8 +6,10 @@ import { faqItems } from "../data/faq.ts";
 
 <section id="faq" class="faq section section--light" aria-labelledby="faq-title">
   <div class="container faq__container">
-    <SectionKicker label="Dúvidas frequentes" />
-    <h2 id="faq-title" class="faq__title">Perguntas frequentes</h2>
+    <div class="section-header">
+      <SectionKicker label="Dúvidas frequentes" />
+      <h2 id="faq-title" class="faq__title">Perguntas frequentes</h2>
+    </div>
 
     <div class="faq__list">
       {
@@ -40,7 +42,6 @@ import { faqItems } from "../data/faq.ts";
   .faq__title {
     font-size: var(--fs-h2);
     font-weight: 800;
-    margin-bottom: var(--jf-space-xl);
   }
 
   .faq__list {
@@ -106,7 +107,8 @@ import { faqItems } from "../data/faq.ts";
   .faq__footer {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
     gap: var(--jf-space-md);
     padding-top: var(--jf-space-lg);
     border-top: 1px solid var(--jf-border);

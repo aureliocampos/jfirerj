@@ -5,36 +5,69 @@ import { services } from "../data/services.ts";
 import type { Service } from "../data/services.ts";
 
 const icons: Record<Service["icon"], string> = {
-  sprinkler: `<path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/>`,
-  hydrant: `<rect x="8" y="6" width="8" height="14" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M6 10h4M14 10h4M10 6V4M14 6V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`,
-  alarm: `<path d="M12 3v2M5.5 5.5l1.4 1.4M18.5 5.5l-1.4 1.4M3 12h2M19 12h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M7 14a5 5 0 0110 0v3H7v-3z" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M10 20h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`,
-  light: `<path d="M12 2v2M8 4l1 1.7M16 4l-1 1.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="9" y="8" width="6" height="8" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M10 20h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`,
-  sign: `<rect x="4" y="4" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M8 10h8M8 13h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 16v4" stroke="currentColor" stroke-width="1.5"/>`,
-  smoke: `<path d="M8 16c-2 0-3-1.5-3-3s1.5-3 3-3c.5-2 2-3.5 4-3.5s3.5 1.5 4 3.5c1.5 0 3 1 3 2.5s-1.5 2.5-3 2.5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M6 18h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`,
+  sprinkler: `<path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.75" fill="none"/>`,
+  hydrant: `<rect x="8" y="6" width="8" height="14" rx="1" stroke="currentColor" stroke-width="1.75" fill="none"/><path d="M6 10h4M14 10h4M10 6V4M14 6V4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>`,
+  alarm: `<path d="M12 3v2M5.5 5.5l1.4 1.4M18.5 5.5l-1.4 1.4M3 12h2M19 12h2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M7 14a5 5 0 0110 0v3H7v-3z" stroke="currentColor" stroke-width="1.75" fill="none"/><path d="M10 20h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>`,
+  light: `<path d="M12 2v2M8 4l1 1.7M16 4l-1 1.7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><rect x="9" y="8" width="6" height="8" rx="1" stroke="currentColor" stroke-width="1.75" fill="none"/><path d="M10 20h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>`,
+  sign: `<rect x="4" y="4" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1.75" fill="none"/><path d="M8 10h8M8 13h5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M12 16v4" stroke="currentColor" stroke-width="1.75"/>`,
+  smoke: `<path d="M8 16c-2 0-3-1.5-3-3s1.5-3 3-3c.5-2 2-3.5 4-3.5s3.5 1.5 4 3.5c1.5 0 3 1 3 2.5s-1.5 2.5-3 2.5" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round"/><path d="M6 18h12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>`,
 };
+
+const bands = [
+  {
+    number: "01",
+    kicker: "Frente de combate",
+    title: "Supressão e detecção",
+    items: services.slice(0, 3),
+  },
+  {
+    number: "02",
+    kicker: "Frente de evacuação",
+    title: "Sinalização e suporte",
+    items: services.slice(3, 6),
+  },
+];
 ---
 
 <section id="servicos" class="services section section--light" aria-labelledby="services-title">
   <div class="container">
-    <SectionKicker label="O que fazemos" />
-    <h2 id="services-title" class="services__title">Soluções completas em prevenção e combate a incêndio</h2>
-    <p class="services__lead">
-      Da instalação ao laudo, cuidamos de cada etapa do seu sistema de segurança.
-    </p>
+    <div class="section-header">
+      <SectionKicker label="O que fazemos" />
+      <h2 id="services-title" class="services__title">Soluções completas em prevenção e combate a incêndio</h2>
+      <p class="services__lead">
+        Da instalação ao laudo, cuidamos de cada etapa do seu sistema de segurança.
+      </p>
+    </div>
 
-    <ul class="services__grid">
+    <div class="services__bands">
       {
-        services.map((service) => (
-          <li class="services__card">
-            <div class="services__icon" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" set:html={icons[service.icon]} />
+        bands.map((band, index) => (
+          <article class:list={["band", { "band--reverse": index % 2 === 1 }]}>
+            <div class="band__graphic blueprint-bg" aria-hidden="true">
+              <span class="band__number">{band.number}</span>
+              <span class="band__graphic-label">{band.kicker}</span>
             </div>
-            <h3 class="services__card-title">{service.title}</h3>
-            <p class="services__card-desc">{service.description}</p>
-          </li>
+            <div class="band__content">
+              <p class="band__eyebrow">{band.kicker}</p>
+              <h3 class="band__title">{band.title}</h3>
+              <ul class="band__list">
+                {band.items.map((service) => (
+                  <li class="band__item">
+                    <div class="band__item-icon" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" set:html={icons[service.icon]} />
+                    </div>
+                    <div>
+                      <h4 class="band__item-title">{service.title}</h4>
+                      <p class="band__item-desc">{service.description}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
         ))
       }
-    </ul>
+    </div>
 
     <div class="services__footer">
       <p class="services__footer-text">Não sabe do que precisa?</p>
@@ -49,55 +82,119 @@ const icons: Record<Service["icon"], string> = {
   .services__title {
     font-size: var(--fs-h2);
     font-weight: 800;
-    margin-bottom: var(--jf-space-sm);
-    max-width: 36rem;
   }
 
   .services__lead {
     color: var(--jf-text-mut);
-    margin-bottom: var(--jf-space-xl);
-    max-width: 32rem;
+    margin-top: var(--jf-space-sm);
   }
 
-  .services__grid {
+  .services__bands {
+    display: flex;
+    flex-direction: column;
+    gap: var(--jf-space-xl);
+    margin-bottom: var(--jf-space-2xl);
+  }
+
+  .band {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--jf-space-md);
-    margin-bottom: var(--jf-space-xl);
-  }
-
-  .services__card {
-    padding: var(--jf-space-lg);
     background-color: var(--jf-surface-raised);
     border: 1px solid var(--jf-border);
-    border-radius: var(--jf-radius-sm);
-    transition: border-color 0.2s;
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
   }
 
-  .services__card:hover {
+  .band:hover {
     border-color: var(--jf-ember-500);
+    box-shadow: var(--jf-shadow-md);
   }
 
-  .services__icon {
+  .band__graphic {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 12rem;
+    padding: var(--jf-space-lg);
+    background-color: var(--jf-ink);
+    overflow: hidden;
+  }
+
+  .band__number {
+    position: absolute;
+    top: var(--jf-space-md);
+    right: var(--jf-space-lg);
+    font-family: var(--jf-font-display);
+    font-size: clamp(4rem, 10vw, 7rem);
+    font-weight: 800;
     color: var(--jf-fire-500);
-    margin-bottom: var(--jf-space-md);
+    opacity: 0.25;
+    line-height: 1;
   }
 
-  .services__card-title {
-    font-size: var(--fs-h3);
-    font-weight: 700;
+  .band__graphic-label {
+    position: relative;
+    font-family: var(--jf-font-mono);
+    font-size: var(--fs-kicker);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--jf-text-inv);
+  }
+
+  .band__content {
+    padding: var(--jf-space-xl) var(--jf-space-lg);
+  }
+
+  .band__eyebrow {
+    font-family: var(--jf-font-mono);
+    font-size: var(--fs-kicker);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--jf-fire-600);
     margin-bottom: var(--jf-space-sm);
   }
 
-  .services__card-desc {
+  .band__title {
+    font-size: var(--fs-h3);
+    font-weight: 800;
+    margin-bottom: var(--jf-space-lg);
+  }
+
+  .band__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--jf-space-lg);
+  }
+
+  .band__item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--jf-space-md);
+  }
+
+  .band__item-icon {
+    flex-shrink: 0;
+    color: var(--jf-fire-500);
+  }
+
+  .band__item-title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    margin-bottom: 0.25em;
+  }
+
+  .band__item-desc {
     color: var(--jf-text-mut);
-    font-size: 0.9375rem;
+    font-size: 1.1875rem;
   }
 
   .services__footer {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
     gap: var(--jf-space-md);
     padding-top: var(--jf-space-lg);
     border-top: 1px solid var(--jf-border);
@@ -107,15 +204,21 @@ const icons: Record<Service["icon"], string> = {
     font-weight: 500;
   }
 
-  @media (min-width: 640px) {
-    .services__grid {
-      grid-template-columns: repeat(2, 1fr);
+  @media (min-width: 900px) {
+    .band {
+      grid-template-columns: minmax(20rem, 34%) 1fr;
     }
-  }
 
-  @media (min-width: 1024px) {
-    .services__grid {
-      grid-template-columns: repeat(3, 1fr);
+    .band--reverse {
+      grid-template-columns: 1fr minmax(20rem, 34%);
+    }
+
+    .band--reverse .band__graphic {
+      order: 2;
+    }
+
+    .band__content {
+      padding: var(--jf-space-2xl);
     }
   }
 </style>

@@ -99,7 +99,7 @@ const year = new Date().getFullYear();
   .footer__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--jf-space-2xl);
+    gap: var(--jf-space-xl);
     margin-bottom: var(--jf-space-xl);
   }
 
@@ -185,6 +185,11 @@ const year = new Date().getFullYear();
   @media (min-width: 768px) {
     .footer__grid {
       grid-template-columns: repeat(3, 1fr);
+      gap: var(--jf-space-xl);
+    }
+
+    .footer__block {
+      width: 100%;
     }
   }
 </style>

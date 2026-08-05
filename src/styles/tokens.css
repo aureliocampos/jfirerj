@@ -19,6 +19,8 @@
   --jf-ember-400: #fb923c;
   --jf-ember-500: #f97316;
   --jf-ember-600: #ea580c;
+  --jf-ember-700: #c2410c;
+  --jf-ember-800: #9a3412;
 
   --jf-flame-400: #fbbf24;
   --jf-flame-500: #f59e0b;
@@ -37,8 +39,8 @@
   --jf-graphite-100: #eceef1;
 
   /* Superfícies */
-  --jf-bg: #f4f2ee;
-  --jf-surface: #faf9f7;
+  --jf-bg: #ffffff;
+  --jf-surface: #f5f6f7;
   --jf-surface-raised: #ffffff;
 
   /* Texto */
@@ -49,7 +51,7 @@
   --jf-on-brand: #ffffff;
 
   /* Bordas e sombras */
-  --jf-border: #d4d0c8;
+  --jf-border: #e2e4e8;
   --jf-border-dark: #2a3040;
   --jf-shadow-sm: 0 1px 3px rgb(12 14 18 / 12%);
   --jf-shadow-md: 0 4px 16px rgb(12 14 18 / 18%);
@@ -83,6 +85,9 @@
   --jf-space-2xl: clamp(3rem, calc(72 * var(--jf-u)), 6rem);
 
   /* Container */
-  --jf-container-max: 72rem;
+  --jf-container-max: 80rem;
   --jf-container-pad: clamp(1rem, calc(24 * var(--jf-u)), 2rem);
+
+  /* Corte diagonal entre seções */
+  --jf-diagonal: clamp(1.5rem, 4vw, 3rem);
 }
