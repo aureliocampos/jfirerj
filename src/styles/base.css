@@ -142,7 +142,11 @@ ul {
   border: 2px solid transparent;
   border-radius: var(--jf-radius-md);
   cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    color 0.2s,
+    transform 0.2s;
   text-align: center;
 }
 
@@ -206,7 +210,7 @@ ul {
   position: relative;
 }
 
-.diagonal-bottom::after {
+/* .diagonal-bottom::after {
   content: "";
   position: absolute;
   left: 0;
@@ -216,7 +220,7 @@ ul {
   background-color: inherit;
   clip-path: polygon(0 0, 100% 100%, 0 100%);
   pointer-events: none;
-}
+} */
 
 .diagonal-top {
   position: relative;
