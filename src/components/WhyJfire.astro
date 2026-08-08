@@ -56,7 +56,6 @@ const differentials = [
         ))
       }
     </ul>
-
   </div>
 
   <div class="why__credentials">
@@ -66,7 +65,11 @@ const differentials = [
         serviços executados dentro das normas técnicas e exigências oficiais.
       </p>
       <div class="why__badges">
-        {credentials.map((credential) => <CredentialBadge credential={credential} />)}
+        {
+          credentials.map((credential) => (
+            <CredentialBadge credential={credential} />
+          ))
+        }
       </div>
     </div>
   </div>
