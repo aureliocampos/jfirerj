@@ -1,0 +1,93 @@
+/* JFIRE Design System — tokens oficiais */
+:root {
+  /* Unidade proporcional (layout/espaçamento) */
+  --jf-base: 1440;
+  --jf-u: calc(100vw / var(--jf-base));
+
+  /* Paleta fogo */
+  --jf-fire-50: #fef2f2;
+  --jf-fire-100: #fee2e2;
+  --jf-fire-200: #fecaca;
+  --jf-fire-300: #fca5a5;
+  --jf-fire-400: #f87171;
+  --jf-fire-500: #dc2626;
+  --jf-fire-600: #b91c1c;
+  --jf-fire-700: #991b1b;
+  --jf-fire-800: #7f1d1d;
+  --jf-fire-900: #450a0a;
+
+  --jf-ember-400: #fb923c;
+  --jf-ember-500: #f97316;
+  --jf-ember-600: #ea580c;
+  --jf-ember-700: #c2410c;
+  --jf-ember-800: #9a3412;
+
+  --jf-flame-400: #fbbf24;
+  --jf-flame-500: #f59e0b;
+  --jf-flame-600: #d97706;
+
+  /* Neutros / grafite */
+  --jf-ink: #0c0e12;
+  --jf-graphite-900: #151820;
+  --jf-graphite-800: #1e222d;
+  --jf-graphite-700: #2a3040;
+  --jf-graphite-600: #3d4455;
+  --jf-graphite-500: #5c6370;
+  --jf-graphite-400: #8b919d;
+  --jf-graphite-300: #b4b8c0;
+  --jf-graphite-200: #d4d7dc;
+  --jf-graphite-100: #eceef1;
+
+  /* Superfícies */
+  --jf-bg: #ffffff;
+  --jf-surface: #f5f6f7;
+  --jf-surface-raised: #ffffff;
+
+  /* Texto */
+  --jf-text: #151820;
+  --jf-text-mut: #5c6370;
+  --jf-text-inv: #f4f2ee;
+  --jf-text-inv-mut: #b4b8c0;
+  --jf-on-brand: #ffffff;
+
+  /* Bordas e sombras */
+  --jf-border: #e2e4e8;
+  --jf-border-dark: #2a3040;
+  --jf-shadow-sm: 0 1px 3px rgb(12 14 18 / 12%);
+  --jf-shadow-md: 0 4px 16px rgb(12 14 18 / 18%);
+  --jf-shadow-lg: 0 8px 32px rgb(12 14 18 / 24%);
+
+  /* Raio */
+  --jf-radius-sm: 2px;
+  --jf-radius-md: 4px;
+  --jf-radius-lg: 8px;
+  --jf-radius-pill: 9999px;
+
+  /* Tipografia */
+  --jf-font-display: "Archivo", system-ui, sans-serif;
+  --jf-font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --jf-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* WhatsApp (FAB) */
+  --jf-whatsapp: #25d366;
+  --jf-whatsapp-hover: #1ebe57;
+
+  /* Faixa de segurança */
+  --jf-stripe-yellow: #f59e0b;
+  --jf-stripe-black: #151820;
+
+  /* Espaçamento */
+  --jf-space-xs: clamp(0.25rem, calc(4 * var(--jf-u)), 0.5rem);
+  --jf-space-sm: clamp(0.5rem, calc(8 * var(--jf-u)), 0.75rem);
+  --jf-space-md: clamp(0.75rem, calc(16 * var(--jf-u)), 1.25rem);
+  --jf-space-lg: clamp(1.25rem, calc(24 * var(--jf-u)), 2rem);
+  --jf-space-xl: clamp(2rem, calc(48 * var(--jf-u)), 4rem);
+  --jf-space-2xl: clamp(3rem, calc(72 * var(--jf-u)), 6rem);
+
+  /* Container */
+  --jf-container-max: 80rem;
+  --jf-container-pad: clamp(1rem, calc(24 * var(--jf-u)), 2rem);
+
+  /* Corte diagonal entre seções */
+  --jf-diagonal: clamp(1.5rem, 4vw, 3rem);
+}

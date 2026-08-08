@@ -1,0 +1,120 @@
+---
+import SectionKicker from "./SectionKicker.astro";
+import WhatsAppLink from "./WhatsAppLink.astro";
+import { faqItems } from "../data/faq.ts";
+---
+
+<section id="faq" class="faq section section--light" aria-labelledby="faq-title">
+  <div class="container faq__container">
+    <div class="section-header">
+      <SectionKicker label="Dúvidas frequentes" />
+      <h2 id="faq-title" class="faq__title">Perguntas frequentes</h2>
+    </div>
+
+    <div class="faq__list">
+      {
+        faqItems.map((item) => (
+          <details class="faq__item">
+            <summary class="faq__question">
+              {item.question}
+              {item.pending && <span class="faq__pending" data-pending>revisar</span>}
+            </summary>
+            <p class="faq__answer">{item.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+
+    <div class="faq__footer">
+      <p class="faq__footer-text">Não encontrou sua dúvida?</p>
+      <WhatsAppLink messageKey="faq" variant="outline-dark">
+        Fale com a gente
+      </WhatsAppLink>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq__container {
+    max-width: 44rem;
+  }
+
+  .faq__title {
+    font-size: var(--fs-h2);
+    font-weight: 800;
+  }
+
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--jf-space-xl);
+  }
+
+  .faq__item {
+    padding-block: var(--jf-space-md);
+    border-bottom: 1px solid var(--jf-border);
+  }
+
+  .faq__item:first-child {
+    border-top: 1px solid var(--jf-border);
+  }
+
+  .faq__question {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: var(--fs-body);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--jf-space-md);
+  }
+
+  .faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__question::after {
+    content: "+";
+    flex-shrink: 0;
+    font-family: var(--jf-font-display);
+    font-size: 1.25rem;
+    color: var(--jf-fire-500);
+    transition: transform 0.2s;
+  }
+
+  .faq__item[open] .faq__question::after {
+    transform: rotate(45deg);
+  }
+
+  .faq__pending {
+    font-family: var(--jf-font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--jf-fire-600);
+    border: 1px dashed var(--jf-fire-600);
+    border-radius: var(--jf-radius-sm);
+    padding: 0.125em 0.5em;
+  }
+
+  .faq__answer {
+    color: var(--jf-text-mut);
+    margin-top: var(--jf-space-sm);
+    max-width: 38rem;
+  }
+
+  .faq__footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--jf-space-md);
+    padding-top: var(--jf-space-lg);
+    border-top: 1px solid var(--jf-border);
+  }
+
+  .faq__footer-text {
+    font-weight: 500;
+  }
+</style>

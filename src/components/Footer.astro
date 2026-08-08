@@ -1,0 +1,195 @@
+---
+import { Image } from "astro:assets";
+import WhatsAppLink from "./WhatsAppLink.astro";
+import CredentialBadge from "./CredentialBadge.astro";
+import logo from "../assets/brand/jfire-logo.jpg";
+import { credentials } from "../data/credentials.ts";
+import { BUSINESS, SOCIAL, phoneHref } from "../config/site.ts";
+
+const fullAddress = `${BUSINESS.address.street}, ${BUSINESS.address.neighborhood}, ${BUSINESS.address.city}, ${BUSINESS.address.state}`;
+const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(fullAddress)}&z=15&output=embed`;
+const year = new Date().getFullYear();
+---
+
+<footer id="contato" class="footer section--dark">
+  <div class="container footer__logo">
+    <Image src={logo} alt="JFIRE" height={40} densities={[1, 2]} loading="lazy" />
+  </div>
+  <div class="container footer__grid">
+    <div class="footer__block">
+      <h2 class="footer__heading">Onde estamos</h2>
+      <p class="footer__address">{fullAddress}</p>
+      <div class="footer__map">
+        <iframe
+          src={mapSrc}
+          title={`Mapa — ${BUSINESS.name} em ${fullAddress}`}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </div>
+
+    <div class="footer__block">
+      <h2 class="footer__heading">Contato</h2>
+      <ul class="footer__contact">
+        {
+          BUSINESS.phones.map((phone) => (
+            <li>
+              <a href={phoneHref(phone)}>{phone}</a>
+            </li>
+          ))
+        }
+      </ul>
+      <WhatsAppLink messageKey="footer" variant="outline-light">
+        Falar no WhatsApp
+      </WhatsAppLink>
+
+      <h2 class="footer__heading footer__heading--social">Redes sociais</h2>
+      <ul class="footer__social">
+        <li>
+          <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer" aria-label="JFIRE no Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M14 8.5h2.5V5h-2.5c-2.2 0-4 1.8-4 4v2H8v3.5h2.5V21H14v-6.5h2.4l.6-3.5h-3V9c0-.5.5-1 1-1z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" fill="none" />
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="JFIRE no Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.3" />
+              <circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.3" />
+              <circle cx="16.5" cy="7.5" r="0.9" fill="currentColor" />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer__block">
+      <h2 class="footer__heading">Credenciamento</h2>
+      <div class="footer__badges">
+        {credentials.map((credential) => <CredentialBadge credential={credential} />)}
+      </div>
+    </div>
+  </div>
+
+  <div class="container footer__legal">
+    <!-- TODO(cliente): confirmar razão social e CNPJ -->
+    <p>{BUSINESS.legalName}{BUSINESS.cnpj && ` · CNPJ ${BUSINESS.cnpj}`} · &copy; {year} {BUSINESS.name}. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: var(--jf-space-2xl) var(--jf-space-xl);
+    background-color: var(--jf-graphite-900);
+    color: var(--jf-text-inv-mut);
+  }
+
+  .footer__logo {
+    margin-bottom: var(--jf-space-xl);
+  }
+
+  .footer__logo :global(img) {
+    height: 2.5rem;
+    width: auto;
+    border-radius: var(--jf-radius-sm);
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--jf-space-xl);
+    margin-bottom: var(--jf-space-xl);
+  }
+
+  .footer__heading {
+    font-family: var(--jf-font-mono);
+    font-size: var(--fs-kicker);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--jf-text-inv);
+    margin-bottom: var(--jf-space-md);
+  }
+
+  .footer__heading--social {
+    margin-top: var(--jf-space-lg);
+  }
+
+  .footer__address {
+    margin-bottom: var(--jf-space-md);
+  }
+
+  .footer__map {
+    border-radius: var(--jf-radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--jf-border-dark);
+  }
+
+  .footer__map iframe {
+    width: 100%;
+    height: 200px;
+    border: 0;
+    display: block;
+  }
+
+  .footer__contact {
+    margin-bottom: var(--jf-space-md);
+  }
+
+  .footer__contact li {
+    margin-bottom: var(--jf-space-xs);
+  }
+
+  .footer__contact a:hover,
+  .footer__contact a:focus-visible {
+    color: var(--jf-text-inv);
+  }
+
+  .footer__social {
+    display: flex;
+    gap: var(--jf-space-md);
+  }
+
+  .footer__social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--jf-border-dark);
+    border-radius: var(--jf-radius-pill);
+    color: var(--jf-text-inv-mut);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .footer__social a:hover,
+  .footer__social a:focus-visible {
+    color: var(--jf-text-inv);
+    border-color: var(--jf-flame-500);
+  }
+
+  .footer__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--jf-space-sm);
+  }
+
+  .footer__legal {
+    padding-top: var(--jf-space-lg);
+    border-top: 1px solid var(--jf-border-dark);
+    font-size: 0.8125rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--jf-space-xl);
+    }
+
+    .footer__block {
+      width: 100%;
+    }
+  }
+</style>

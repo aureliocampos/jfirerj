@@ -1,0 +1,108 @@
+---
+import { Image } from "astro:assets";
+import SectionKicker from "./SectionKicker.astro";
+import WhatsAppLink from "./WhatsAppLink.astro";
+import heroImage from "../assets/placeholders/hero.jpg";
+---
+
+<!--
+  TODO(cliente): substituir por foto real do Hero (bombeiro/técnico em
+  ação ou sistema instalado). Placeholder atual: sala de bombas de
+  hidrante, foto "Fire Pump Room, Brisbane" (Wikimedia Commons,
+  CC BY-SA 4.0, autor: Bidgee) — usada só até a foto real chegar.
+-->
+<section class="hero section--dark diagonal-bottom" aria-labelledby="hero-title">
+  <Image
+    src={heroImage}
+    alt=""
+    class="hero__bg"
+    widths={[480, 768, 1280, 1920]}
+    sizes="100vw"
+    quality={35}
+    loading="eager"
+    fetchpriority="high"
+  />
+  <div class="hero__overlay" aria-hidden="true"></div>
+  <div class="hero__content container">
+    <SectionKicker
+      label="Prevenção e combate a incêndio · Rio de Janeiro"
+      variant="dark"
+    />
+    <h1 id="hero-title" class="hero__title">
+      Proteção contra incêndio que mantém seu imóvel seguro e regularizado
+    </h1>
+    <p class="hero__desc">
+      Instalação e manutenção de sistemas de combate a incêndio para condomínios
+      e empresas no Rio de Janeiro. Do projeto à execução, com conformidade
+      junto ao Corpo de Bombeiros.
+    </p>
+    <div class="hero__actions">
+      <WhatsAppLink
+        messageKey="hero_specialist"
+        ariaLabel="Falar com um especialista pelo WhatsApp"
+      >
+        Falar com um especialista
+      </WhatsAppLink>
+      <a href="#condominios" class="btn btn--outline-light">
+        Solicitar orçamento
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: clamp(28rem, 80vh, 40rem);
+    display: flex;
+    align-items: center;
+    padding-block: var(--jf-space-2xl);
+    background-color: var(--jf-graphite-900);
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 60%;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgb(12 14 18 / 92%) 0%,
+      rgb(12 14 18 / 75%) 50%,
+      rgb(12 14 18 / 85%) 100%
+    );
+    pointer-events: none;
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero__title {
+    font-size: var(--fs-h1);
+    font-weight: 800;
+    color: var(--jf-text-inv);
+    margin-bottom: var(--jf-space-md);
+  }
+
+  .hero__desc {
+    font-size: var(--fs-body);
+    color: var(--jf-text-inv-mut);
+    margin-bottom: var(--jf-space-xl);
+    max-width: 36rem;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--jf-space-md);
+  }
+</style>

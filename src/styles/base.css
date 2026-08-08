@@ -1,0 +1,239 @@
+@import "./tokens.css";
+
+/* Tipografia fluida (WCAG 1.4.4 — piso/teto em rem) */
+:root {
+  --fs-kicker: clamp(0.75rem, calc(14 * var(--jf-u)), 0.875rem);
+  --fs-body: clamp(1rem, calc(18 * var(--jf-u)), 1.125rem);
+  --fs-h3: clamp(1.25rem, calc(24 * var(--jf-u)), 1.5rem);
+  --fs-h2: clamp(1.75rem, calc(38 * var(--jf-u)), 2.375rem);
+  --fs-h1: clamp(2.25rem, calc(64 * var(--jf-u)), 4rem);
+  --fs-proof: clamp(2.5rem, calc(72 * var(--jf-u)), 4.5rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--jf-font-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--jf-text);
+  background-color: var(--jf-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--jf-font-display);
+  line-height: 1.15;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Utilitários */
+.container {
+  width: 100%;
+  max-width: var(--jf-container-max);
+  margin-inline: auto;
+  padding-inline: var(--jf-container-pad);
+}
+
+/* Cabeçalho de seção centralizado (kicker + h2 + linha de apoio opcional) */
+.section-header {
+  text-align: center;
+  max-width: 44rem;
+  margin-inline: auto;
+  margin-bottom: var(--jf-space-xl);
+}
+
+.section-header > :last-child {
+  margin-bottom: 0;
+}
+
+.section {
+  padding-block: var(--jf-space-2xl);
+}
+
+.section--dark {
+  background-color: var(--jf-ink);
+  color: var(--jf-text-inv);
+}
+
+.section--light {
+  background-color: var(--jf-bg);
+  color: var(--jf-text);
+}
+
+.section--surface {
+  background-color: var(--jf-surface);
+  color: var(--jf-text);
+}
+
+/* Textura faixa de segurança */
+.stripe-divider {
+  height: 4px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--jf-stripe-yellow),
+    var(--jf-stripe-yellow) 8px,
+    var(--jf-stripe-black) 8px,
+    var(--jf-stripe-black) 16px
+  );
+}
+
+/* Botões */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--jf-space-sm);
+  padding: 0.875em 1.5em;
+  font-family: var(--jf-font-body);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  line-height: 1;
+  border: 2px solid transparent;
+  border-radius: var(--jf-radius-md);
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    color 0.2s,
+    transform 0.2s;
+  text-align: center;
+}
+
+.btn--primary {
+  background-color: var(--jf-ember-700);
+  color: var(--jf-on-brand);
+  border-color: var(--jf-ember-700);
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  background-color: var(--jf-ember-800);
+  border-color: var(--jf-ember-800);
+  transform: translateY(-1px);
+}
+
+.btn--primary:active {
+  transform: translateY(0);
+}
+
+.btn--outline-light {
+  background-color: transparent;
+  color: var(--jf-text-inv);
+  border-color: var(--jf-text-inv-mut);
+}
+
+.btn--outline-light:hover,
+.btn--outline-light:focus-visible {
+  border-color: var(--jf-text-inv);
+  color: var(--jf-text-inv);
+}
+
+.btn--outline-dark {
+  background-color: transparent;
+  color: var(--jf-text);
+  border-color: var(--jf-border);
+}
+
+.btn--outline-dark:hover,
+.btn--outline-dark:focus-visible {
+  border-color: var(--jf-ember-500);
+  color: var(--jf-fire-600);
+}
+
+/* Foco visível */
+:focus-visible {
+  outline: 2px solid var(--jf-flame-500);
+  outline-offset: 3px;
+}
+
+/* Grafismo blueprint (fundo decorativo) */
+.blueprint-bg {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.06' stroke-width='0.5'%3E%3Cpath d='M0 50h100M50 0v100'/%3E%3Ccircle cx='50' cy='50' r='20'/%3E%3Ccircle cx='50' cy='50' r='35'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 80px 80px;
+}
+
+/* Corte diagonal entre seções — implementado como um triângulo decorativo
+   (pseudo-elemento) que se sobrepõe ao vizinho, na mesma cor de fundo da
+   seção. O conteúdo real nunca é clipado (evita cortar texto/imagem). */
+.diagonal-bottom {
+  position: relative;
+}
+
+/* .diagonal-bottom::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(-1 * var(--jf-diagonal) + 1px);
+  height: var(--jf-diagonal);
+  background-color: inherit;
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+  pointer-events: none;
+} */
+
+.diagonal-top {
+  position: relative;
+}
+
+.diagonal-top::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(-1 * var(--jf-diagonal) + 1px);
+  height: var(--jf-diagonal);
+  background-color: inherit;
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
