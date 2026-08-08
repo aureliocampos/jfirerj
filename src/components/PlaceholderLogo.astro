@@ -1,64 +1,37 @@
 ---
 interface Props {
   name: string;
-  variant?: "logo" | "badge" | "photo";
 }
 
-const { name, variant = "logo" } = Astro.props;
-
-const label =
-  variant === "photo"
-    ? `Foto da instalação — ${name} — aguardando arquivo do cliente`
-    : `Logo ${name} — aguardando arquivo do cliente`;
+const { name } = Astro.props;
 ---
 
 <div
-  class:list={["placeholder-logo", `placeholder-logo--${variant}`]}
+  class="placeholder-logo"
   data-pending
   role="img"
-  aria-label={label}
+  aria-label={`Foto da instalação — ${name} — aguardando arquivo do cliente`}
 >
   <span class="placeholder-logo__name">{name}</span>
-  {
-    variant === "photo" && (
-      <span class="placeholder-logo__tag">Foto pendente</span>
-    )
-  }
+  <span class="placeholder-logo__tag">Foto pendente</span>
 </div>
 
 <style>
   .placeholder-logo {
+    position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 1px dashed var(--jf-border);
-    background-color: var(--jf-surface);
-    color: var(--jf-ink-2);
-    text-align: center;
-  }
-
-  .placeholder-logo--logo {
-    min-height: 4rem;
-    padding: var(--jf-space-sm) var(--jf-space-md);
-    border-radius: var(--jf-radius-xs);
-  }
-
-  .placeholder-logo--badge {
-    min-height: 3rem;
-    min-width: 5rem;
-    padding: var(--jf-space-xs) var(--jf-space-sm);
-    border-radius: var(--jf-radius-xs);
-    font-size: 0.75rem;
-  }
-
-  .placeholder-logo--photo {
-    position: relative;
-    flex-direction: column;
     gap: var(--jf-space-xs);
     aspect-ratio: 4 / 3;
     width: 100%;
     padding: var(--jf-space-md);
+    border: 1px dashed var(--jf-border);
     border-radius: var(--jf-radius-xs);
+    background-color: var(--jf-surface);
+    color: var(--jf-ink-2);
+    text-align: center;
   }
 
   .placeholder-logo__name {

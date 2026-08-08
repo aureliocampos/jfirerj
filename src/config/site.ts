@@ -82,21 +82,6 @@ export function whatsappCaseUrl(clientName: string): string {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 }
 
-/** Composição do deep link a partir do formulário de contato (ilha vanilla). */
-export function whatsappContactFormUrl(data: {
-  nome: string;
-  tipo: string;
-  mensagem: string;
-}): string {
-  const text = [
-    "Olá! Vim pelo site e quero solicitar um orçamento. *[Contato]*",
-    `Nome: ${data.nome}`,
-    `Tipo: ${data.tipo}`,
-    `Mensagem: ${data.mensagem}`,
-  ].join("\n");
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
-}
-
 export function phoneHref(phone: string): string {
   const digits = phone.replace(/\D/g, "");
   return `tel:+55${digits.startsWith("55") ? digits.slice(2) : digits}`;

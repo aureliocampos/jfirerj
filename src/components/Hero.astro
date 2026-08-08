@@ -17,21 +17,29 @@ import heroImage from "../assets/placeholders/hero.jpg";
     <div class="hero__content">
       <SectionKicker label="Projeto · Instalação · Regularização" />
       <h1 id="hero-title" class="hero__title">
-        Segurança contra incêndio para sua empresa ou condomínio operar
-        seguro e em conformidade
+        Segurança contra incêndio para sua empresa ou condomínio operar seguro e
+        em conformidade
       </h1>
       <p class="hero__desc">
         A JFire projeta, instala e regulariza sprinkler, alarme, hidrantes e
-        para-raios. Equipe credenciada pelo CREA, CAU e Corpo de Bombeiros,
-        com mais de 8 anos protegendo edificações no Rio.
+        para-raios. Equipe credenciada pelo CREA, CAU e Corpo de Bombeiros, com
+        mais de 8 anos protegendo edificações no Rio.
       </p>
       <div class="hero__actions">
-        <WhatsAppLink messageKey="hero" ariaLabel="Solicitar orçamento pelo WhatsApp">
+        <WhatsAppLink
+          messageKey="hero"
+          ariaLabel="Solicitar orçamento pelo WhatsApp"
+        >
           Solicitar orçamento
         </WhatsAppLink>
         <a href="#como-funciona" class="btn btn--outline">
           Ver como funciona
-          <Icon name="lucide:arrow-down" aria-hidden="true" width={18} height={18} />
+          <Icon
+            name="lucide:arrow-down"
+            aria-hidden="true"
+            width={18}
+            height={18}
+          />
         </a>
       </div>
     </div>
@@ -103,6 +111,9 @@ import heroImage from "../assets/placeholders/hero.jpg";
   }
 
   @media (min-width: 900px) {
+    .hero {
+      padding-block: 120px;
+    }
     .hero__grid {
       grid-template-columns: 1.1fr 0.9fr;
       gap: var(--jf-space-2xl);
@@ -110,6 +121,23 @@ import heroImage from "../assets/placeholders/hero.jpg";
 
     .hero__media {
       order: 2;
+    }
+
+    /*
+      A partir daqui a coluna de texto fica mais estreita (grid de duas
+      colunas), então a curva fluida de --fs-h1 (pensada para a coluna
+      cheia do mobile) já satura no teto e passa a quebrar em menos de
+      três linhas. Os dois valores fixos abaixo foram calibrados nos
+      breakpoints reais do grid para manter o H1 em três linhas.
+    */
+    .hero__title {
+      font-size: 1.625rem;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .hero__title {
+      font-size: 1.6875rem;
     }
   }
 </style>

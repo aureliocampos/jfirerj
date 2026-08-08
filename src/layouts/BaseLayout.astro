@@ -16,6 +16,7 @@ import {
   WHATSAPP_NUMBER,
 } from "../config/site.ts";
 import { services } from "../data/services.ts";
+import { faqItems } from "../data/faq.ts";
 import heroImage from "../assets/placeholders/hero.jpg";
 
 const heroWidths = [480, 768, 1280, 1920];
@@ -93,6 +94,19 @@ const serviceList = {
     areaServed: BUSINESS.areaServed,
   })),
 };
+
+const faqPage = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+};
 ---
 
 <!doctype html>
@@ -135,16 +149,22 @@ const serviceList = {
 
     <!-- JSON-LD -->
     <script
+      is:inline
       type="application/ld+json"
       set:html={JSON.stringify(localBusiness)}
     />
     <script
+      is:inline
       type="application/ld+json"
       set:html={JSON.stringify(serviceList)}
     />
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(faqPage)}
+    />
   </head>
   <body>
-    <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
     <slot />
     <script>
       function focusTarget(id: string) {
@@ -162,9 +182,7 @@ const serviceList = {
       }
 
       document.addEventListener("click", (event) => {
-        const link = (event.target as HTMLElement)?.closest?.(
-          "a[href^='#']",
-        );
+        const link = (event.target as HTMLElement)?.closest?.("a[href^='#']");
         if (!link) return;
         const href = link.getAttribute("href");
         if (!href || href === "#") return;

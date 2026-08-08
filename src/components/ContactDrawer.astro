@@ -1,0 +1,324 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import logo from "../assets/brand/jfire-logo.jpg";
+import { BUSINESS, SOCIAL, whatsappUrl, phoneHref } from "../config/site.ts";
+
+const fullAddress = `${BUSINESS.address.street}, ${BUSINESS.address.neighborhood}, ${BUSINESS.address.city}, ${BUSINESS.address.state}`;
+---
+
+<div
+  class="contact-drawer"
+  data-contact-drawer
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="contact-drawer-title"
+  hidden
+>
+  <div class="contact-drawer__backdrop" data-contact-drawer-close></div>
+  <div class="contact-drawer__panel">
+    <div class="contact-drawer__head">
+      <Image src={logo} alt="JFIRE" height={32} densities={[1, 2]} loading="lazy" />
+      <button
+        type="button"
+        class="contact-drawer__close"
+        data-contact-drawer-close
+        aria-label="Fechar"
+      >
+        <Icon name="lucide:x" width={22} height={22} aria-hidden="true" />
+      </button>
+    </div>
+
+    <h2 id="contact-drawer-title" class="contact-drawer__title">Contato</h2>
+    <p class="contact-drawer__desc">
+      A JFire projeta, instala e regulariza sistemas de combate a incêndio
+      para empresas e condomínios no Rio de Janeiro, com equipe credenciada
+      e mais de 8 anos de atuação.
+    </p>
+
+    <ul class="contact-drawer__list">
+      <li>
+        <Icon name="lucide:map-pin" width={20} height={20} aria-hidden="true" />
+        <span>{fullAddress}</span>
+      </li>
+      <li>
+        <img
+          src={`${import.meta.env.BASE_URL}icon-whatsapp.svg`}
+          alt=""
+          width={20}
+          height={20}
+          loading="lazy"
+          decoding="async"
+          class="contact-drawer__list-icon"
+        />
+        <span>WhatsApp: {BUSINESS.whatsappDisplay}</span>
+      </li>
+      <li>
+        <Icon name="lucide:phone" width={20} height={20} aria-hidden="true" />
+        <a href={phoneHref(BUSINESS.phoneDisplay)}>Telefone: {BUSINESS.phoneDisplay}</a>
+      </li>
+      <li>
+        <Icon name="lucide:mail" width={20} height={20} aria-hidden="true" />
+        <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>
+      </li>
+      <li>
+        <Icon name="lucide:clock" width={20} height={20} aria-hidden="true" />
+        <span>{BUSINESS.hours}</span>
+      </li>
+    </ul>
+
+    <a
+      href={whatsappUrl("contact")}
+      class="btn btn--primary contact-drawer__cta"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Falar no WhatsApp
+    </a>
+
+    <ul class="contact-drawer__social">
+      <li>
+        <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer" aria-label="JFIRE no Facebook">
+          <img
+            src={`${import.meta.env.BASE_URL}icon-facebook.svg`}
+            alt="Facebook"
+            width={36}
+            height={36}
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+      </li>
+      <li>
+        <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="JFIRE no Instagram">
+          <img
+            src={`${import.meta.env.BASE_URL}icon-instagram.svg`}
+            alt="Instagram"
+            width={36}
+            height={36}
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  const drawer = document.querySelector<HTMLElement>("[data-contact-drawer]");
+  const openers = document.querySelectorAll<HTMLElement>(
+    "[data-contact-drawer-open]",
+  );
+  const closers = document.querySelectorAll<HTMLElement>(
+    "[data-contact-drawer-close]",
+  );
+
+  let triggerEl: HTMLElement | null = null;
+
+  function getFocusable(): HTMLElement[] {
+    if (!drawer) return [];
+    return Array.from(
+      drawer.querySelectorAll<HTMLElement>(
+        'button, a[href], [tabindex]:not([tabindex="-1"])',
+      ),
+    ).filter(
+      (el) => el instanceof HTMLElement && !el.hasAttribute("disabled"),
+    );
+  }
+
+  function open(trigger: HTMLElement) {
+    if (!drawer) return;
+    triggerEl = trigger;
+    drawer.hidden = false;
+    document.body.classList.add("menu-open");
+    requestAnimationFrame(() => drawer.classList.add("is-open"));
+    getFocusable()[0]?.focus();
+    document.addEventListener("keydown", onKeydown);
+  }
+
+  function close() {
+    if (!drawer) return;
+    drawer.classList.remove("is-open");
+    document.body.classList.remove("menu-open");
+    document.removeEventListener("keydown", onKeydown);
+    window.setTimeout(() => {
+      if (!drawer.classList.contains("is-open")) drawer.hidden = true;
+    }, 250);
+    triggerEl?.focus();
+    triggerEl = null;
+  }
+
+  function onKeydown(event: KeyboardEvent) {
+    if (event.key === "Escape") {
+      close();
+      return;
+    }
+    if (event.key === "Tab") {
+      const focusable = getFocusable();
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  }
+
+  openers.forEach((btn) =>
+    btn.addEventListener("click", () => open(btn)),
+  );
+  closers.forEach((el) => el.addEventListener("click", close));
+</script>
+
+<style>
+  .contact-drawer[hidden] {
+    display: none;
+  }
+
+  .contact-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+  }
+
+  .contact-drawer__backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgb(35 36 31 / 60%);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .contact-drawer.is-open .contact-drawer__backdrop {
+    opacity: 1;
+  }
+
+  .contact-drawer__panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(22rem, 100%);
+    display: flex;
+    flex-direction: column;
+    padding: var(--jf-space-lg);
+    background-color: var(--jf-anchor);
+    color: var(--jf-text-inv);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+  }
+
+  .contact-drawer.is-open .contact-drawer__panel {
+    transform: translateX(0);
+  }
+
+  .contact-drawer__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--jf-space-lg);
+  }
+
+  .contact-drawer__head :global(img) {
+    height: 2rem;
+    width: auto;
+    border-radius: var(--jf-radius-xs);
+  }
+
+  .contact-drawer__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin-inline-end: -0.5rem;
+    background: none;
+    border: none;
+    color: var(--jf-text-inv);
+    cursor: pointer;
+  }
+
+  .contact-drawer__title {
+    font-size: var(--fs-h3);
+    font-weight: 800;
+    margin-bottom: var(--jf-space-sm);
+  }
+
+  .contact-drawer__desc {
+    color: var(--jf-text-inv-mut);
+    margin-bottom: var(--jf-space-lg);
+  }
+
+  .contact-drawer__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--jf-space-sm);
+    margin-bottom: var(--jf-space-lg);
+  }
+
+  .contact-drawer__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--jf-space-sm);
+    font-size: 0.9375rem;
+    color: var(--jf-text-inv-mut);
+  }
+
+  .contact-drawer__list :global(svg) {
+    flex-shrink: 0;
+    margin-top: 0.15em;
+    color: var(--jf-red-bright);
+  }
+
+  .contact-drawer__list-icon {
+    flex-shrink: 0;
+    margin-top: 0.15em;
+  }
+
+  .contact-drawer__list a:hover,
+  .contact-drawer__list a:focus-visible {
+    color: var(--jf-text-inv);
+  }
+
+  .contact-drawer__cta {
+    margin-bottom: var(--jf-space-lg);
+  }
+
+  .contact-drawer__social {
+    display: flex;
+    gap: var(--jf-space-sm);
+    margin-top: auto;
+  }
+
+  .contact-drawer__social a {
+    display: inline-flex;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--jf-radius-pill);
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+
+  .contact-drawer__social a:hover,
+  .contact-drawer__social a:focus-visible {
+    transform: scale(1.08);
+  }
+
+  .contact-drawer__social img {
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact-drawer__panel,
+    .contact-drawer__backdrop {
+      transition: none;
+    }
+  }
+</style>

@@ -57,7 +57,10 @@ const differentials = [
       }
     </ul>
 
-    <div class="why__credentials">
+  </div>
+
+  <div class="why__credentials">
+    <div class="container why__credentials-inner">
       <p class="why__credentials-text">
         Credenciada e reconhecida pelo CREA, CAU/BR e Corpo de Bombeiros, com
         serviços executados dentro das normas técnicas e exigências oficiais.
@@ -104,23 +107,28 @@ const differentials = [
   }
 
   .why__credentials {
+    background-color: var(--jf-red);
+  }
+
+  .why__credentials-inner {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--jf-space-md);
-    padding-top: var(--jf-space-lg);
-    border-top: 1px solid var(--jf-border);
+    gap: var(--jf-space-lg);
+    padding-block: var(--jf-space-xl);
   }
 
   .why__credentials-text {
-    color: var(--jf-ink-2);
-    max-width: 32rem;
+    color: var(--jf-on-brand);
+    font-size: var(--fs-h4);
+    font-weight: 600;
+    max-width: 36rem;
   }
 
   .why__badges {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--jf-space-sm);
+    gap: var(--jf-space-md);
   }
 
   @media (min-width: 640px) {
@@ -147,7 +155,7 @@ const differentials = [
       padding-inline-start: 0;
     }
 
-    .why__credentials {
+    .why__credentials-inner {
       flex-direction: row;
       align-items: center;
       justify-content: space-between;

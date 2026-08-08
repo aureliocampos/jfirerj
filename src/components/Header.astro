@@ -6,8 +6,6 @@ import logo from "../assets/brand/jfire-logo.jpg";
 const navLinks = [
   { href: "#servicos", label: "Serviços" },
   { href: "#como-funciona", label: "Como funciona" },
-  { href: "#casos", label: "Casos" },
-  { href: "#contato", label: "Contato" },
 ];
 ---
 
@@ -53,6 +51,15 @@ const navLinks = [
             </li>
           ))
         }
+        <li>
+          <button
+            type="button"
+            class="header__nav-link header__nav-link--button"
+            data-contact-drawer-open
+          >
+            Contato
+          </button>
+        </li>
       </ul>
       <WhatsAppLink
         messageKey="header"
@@ -82,7 +89,7 @@ const navLinks = [
     document.body.classList.toggle("menu-open", !expanded);
   });
 
-  nav?.querySelectorAll("a").forEach((link) => {
+  nav?.querySelectorAll("a, button").forEach((link) => {
     link.addEventListener("click", () => {
       toggle?.setAttribute("aria-expanded", "false");
       toggle?.setAttribute("aria-label", "Abrir menu de navegação");
@@ -206,6 +213,16 @@ const navLinks = [
   .header__nav-link:hover,
   .header__nav-link:focus-visible {
     color: var(--jf-red-deep);
+  }
+
+  .header__nav-link--button {
+    font-family: inherit;
+    font-size: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
   }
 
   .header__cta {

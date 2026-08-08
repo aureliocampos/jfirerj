@@ -73,7 +73,10 @@ const steps = [
     </ol>
 
     <div class="how__footer">
-      <WhatsAppLink messageKey="how" ariaLabel="Solicitar diagnóstico pelo WhatsApp">
+      <WhatsAppLink
+        messageKey="how"
+        ariaLabel="Solicitar diagnóstico pelo WhatsApp"
+      >
         Solicitar diagnóstico
       </WhatsAppLink>
     </div>
@@ -119,14 +122,15 @@ const steps = [
   }
 
   .how__step-title {
-    font-size: var(--fs-h3);
+    height: 56px;
+    font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: var(--jf-space-sm);
   }
 
   .how__step-desc {
     color: var(--jf-ink-2);
-    font-size: 0.9375rem;
+    font-size: var(--fs-body);
   }
 
   .how__footer {
@@ -137,7 +141,7 @@ const steps = [
   @media (min-width: 768px) {
     .how__list {
       grid-template-columns: repeat(5, 1fr);
-      gap: var(--jf-space-lg);
+      gap: 50px;
     }
   }
 </style>

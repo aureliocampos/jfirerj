@@ -11,7 +11,11 @@ import { cases } from "../data/cases.ts";
   recebidas, os arquivos não estão em src/assets/cases/. Até chegarem,
   cada card usa PlaceholderPhoto (data-pending).
 -->
-<section id="casos" class="cases section section--alt" aria-labelledby="cases-title">
+<section
+  id="casos"
+  class="cases section section--alt"
+  aria-labelledby="cases-title"
+>
   <div class="container">
     <div class="section-header">
       <SectionKicker label="Casos de sucesso" />
@@ -19,8 +23,8 @@ import { cases } from "../data/cases.ts";
         Empresas e condomínios que já confiam na JFire
       </h2>
       <p class="cases__lead">
-        De supermercados e hotéis a academias e condomínios, entregamos
-        projetos que passam na vistoria e protegem quem está dentro.
+        De supermercados e hotéis a academias e condomínios, entregamos projetos
+        que passam na vistoria e protegem quem está dentro.
       </p>
     </div>
 
@@ -38,14 +42,19 @@ import { cases } from "../data/cases.ts";
               data-result={item.result}
               aria-label={`Ver detalhes do caso ${item.name}`}
             >
-              <PlaceholderLogo name={item.name} variant="photo" />
+              <PlaceholderLogo name={item.name} />
               <span class="cases__badge">{item.segment}</span>
             </button>
             <h3 class="cases__name">{item.name}</h3>
             <p class="cases__result">{item.result}</p>
             <div class="cases__actions">
               <span class="cases__pdf" data-pending>
-                <Icon name="lucide:file-down" width={16} height={16} aria-hidden="true" />
+                <Icon
+                  name="lucide:file-down"
+                  width={16}
+                  height={16}
+                  aria-hidden="true"
+                />
                 Ver projeto (PDF) — em breve
               </span>
               <WhatsAppLink
@@ -87,7 +96,12 @@ import { cases } from "../data/cases.ts";
         data-lightbox-prev
         aria-label="Caso anterior"
       >
-        <Icon name="lucide:chevron-left" width={22} height={22} aria-hidden="true" />
+        <Icon
+          name="lucide:chevron-left"
+          width={22}
+          height={22}
+          aria-hidden="true"
+        />
       </button>
       <button
         type="button"
@@ -95,7 +109,12 @@ import { cases } from "../data/cases.ts";
         data-lightbox-next
         aria-label="Próximo caso"
       >
-        <Icon name="lucide:chevron-right" width={22} height={22} aria-hidden="true" />
+        <Icon
+          name="lucide:chevron-right"
+          width={22}
+          height={22}
+          aria-hidden="true"
+        />
       </button>
 
       <div class="lightbox__media" data-lightbox-media data-pending>
@@ -123,9 +142,7 @@ import { cases } from "../data/cases.ts";
   const nextButton = document.querySelector<HTMLButtonElement>(
     "[data-lightbox-next]",
   );
-  const nameEl = document.querySelector<HTMLElement>(
-    "[data-lightbox-name]",
-  );
+  const nameEl = document.querySelector<HTMLElement>("[data-lightbox-name]");
   const segmentEl = document.querySelector<HTMLElement>(
     "[data-lightbox-segment]",
   );
@@ -156,9 +173,7 @@ import { cases } from "../data/cases.ts";
       lightbox.querySelectorAll<HTMLElement>(
         'button, a[href], [tabindex]:not([tabindex="-1"])',
       ),
-    ).filter(
-      (el) => el instanceof HTMLElement && !el.hasAttribute("disabled"),
-    );
+    ).filter((el) => el instanceof HTMLElement && !el.hasAttribute("disabled"));
   }
 
   function open(index: number, trigger: HTMLElement) {
@@ -223,6 +238,13 @@ import { cases } from "../data/cases.ts";
 </script>
 
 <style>
+  /* TODO(cliente): seção oculta a pedido, enquanto as fotos dos casos
+     e os PDFs de projeto não chegam. Remover este display: none quando
+     os assets reais estiverem prontos. */
+  .cases {
+    display: flex;
+  }
+
   .cases__title {
     font-size: var(--fs-h2);
     font-weight: 800;
@@ -259,7 +281,7 @@ import { cases } from "../data/cases.ts";
     text-align: left;
   }
 
-  .cases__trigger :global(.placeholder-logo--photo) {
+  .cases__trigger :global(.placeholder-logo) {
     border-radius: 0;
     border-width: 0 0 1px;
   }

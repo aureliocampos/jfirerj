@@ -26,12 +26,12 @@ const cards = [
 
 <section
   id="problema"
-  class="problem section section--wash diagonal-top"
+  class="problem section section--red diagonal-top"
   aria-labelledby="problem-title"
 >
   <div class="container">
     <div class="section-header">
-      <SectionKicker label="Por que isso importa" variant="wash" />
+      <SectionKicker label="Por que isso importa" variant="inverse" />
       <h2 id="problem-title" class="problem__title">
         Estar fora de conformidade custa caro, e a responsabilidade é sua
       </h2>
@@ -68,10 +68,11 @@ const cards = [
   .problem__title {
     font-size: var(--fs-h2);
     font-weight: 800;
+    color: var(--jf-text-inv);
   }
 
   .problem__lead {
-    color: var(--jf-ink-2);
+    color: var(--jf-text-inv);
     margin-top: var(--jf-space-sm);
   }
 
@@ -87,6 +88,7 @@ const cards = [
     background-color: var(--jf-surface);
     border: 1px solid var(--jf-border);
     border-radius: var(--jf-radius-xs);
+    color: var(--jf-ink);
   }
 
   .problem__icon {
@@ -118,7 +120,7 @@ const cards = [
     text-align: center;
     font-weight: 600;
     font-size: var(--fs-h3);
-    color: var(--jf-wine);
+    color: var(--jf-text-inv);
   }
 
   @media (min-width: 768px) {

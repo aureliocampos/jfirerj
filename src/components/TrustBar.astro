@@ -1,21 +1,25 @@
 ---
-import PlaceholderLogo from "./PlaceholderLogo.astro";
 import { clients } from "../data/clients.ts";
 ---
 
-<section
-  class="trust-bar section--light"
-  aria-labelledby="trust-bar-title"
->
+<section class="trust-bar section--light" aria-labelledby="trust-bar-title">
   <div class="container">
     <h2 id="trust-bar-title" class="trust-bar__title">
-      Empresas e condomínios que confiam na JFire
+      Empresas e condomínios que confiam na <strong>JFire</strong>
     </h2>
     <ul class="trust-bar__grid">
       {
-        clients.map((name) => (
+        clients.map((client) => (
           <li class="trust-bar__item">
-            <PlaceholderLogo name={name} variant="logo" />
+            <img
+              src={`${import.meta.env.BASE_URL}clientes/${client.file}`}
+              alt={client.name}
+              width={358}
+              height={358}
+              loading="lazy"
+              decoding="async"
+              class="trust-bar__logo"
+            />
           </li>
         ))
       }
@@ -25,49 +29,67 @@ import { clients } from "../data/clients.ts";
 
 <style>
   .trust-bar {
-    padding-block: var(--jf-space-xl);
+    padding-top: var(--jf-space-xl);
+    padding-bottom: 120px;
     border-bottom: 1px solid var(--jf-border);
   }
 
   .trust-bar__title {
-    font-size: var(--fs-kicker);
+    font-size: var(--fs-body);
     font-family: var(--jf-font-mono);
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--jf-ink-2);
     margin-bottom: var(--jf-space-lg);
+
+    & strong {
+      color: var(--jf-red);
+    }
   }
 
   .trust-bar__grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--jf-space-md);
   }
 
   .trust-bar__item {
-    filter: grayscale(1);
+    border: 1px solid var(--jf-border);
+    border-radius: var(--jf-radius-xs);
+    overflow: hidden;
     opacity: 0.75;
     transition:
       filter 0.2s,
       opacity 0.2s;
   }
 
-  .trust-bar__item:hover,
-  .trust-bar__item:focus-within {
-    filter: grayscale(0);
-    opacity: 1;
+  .trust-bar__logo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
   }
 
   @media (min-width: 640px) {
     .trust-bar__grid {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(6, 1fr);
     }
   }
 
   @media (min-width: 1024px) {
     .trust-bar__grid {
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(11, 1fr);
+    }
+    .trust-bar__item {
+      filter: grayscale(1);
+    }
+
+    .trust-bar__item:hover,
+    .trust-bar__item:focus-within {
+      filter: grayscale(0);
+      opacity: 1;
     }
   }
 </style>

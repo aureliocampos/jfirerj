@@ -4,9 +4,10 @@
 :root {
   --fs-kicker: clamp(0.75rem, calc(14 * var(--jf-u)), 0.875rem);
   --fs-body: clamp(1rem, calc(18 * var(--jf-u)), 1.125rem);
+  --fs-h4: clamp(1.125rem, calc(20 * var(--jf-u)), 1.25rem);
   --fs-h3: clamp(1.25rem, calc(24 * var(--jf-u)), 1.5rem);
   --fs-h2: clamp(1.75rem, calc(38 * var(--jf-u)), 2.375rem);
-  --fs-h1: clamp(2.25rem, calc(64 * var(--jf-u)), 4rem);
+  --fs-h1: clamp(0.9375rem, calc(64 * var(--jf-u)), 2rem);
   --fs-proof: clamp(2.5rem, calc(72 * var(--jf-u)), 4.5rem);
 }
 
@@ -71,7 +72,8 @@ p {
   text-wrap: pretty;
 }
 
-ul {
+ul,
+ol {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -126,6 +128,11 @@ ul {
 .section--wash {
   background-color: var(--jf-red-wash);
   color: var(--jf-ink);
+}
+
+.section--red {
+  background-color: var(--jf-red);
+  color: var(--jf-text-inv);
 }
 
 .section--anchor {
@@ -225,6 +232,10 @@ ul {
 
 .kicker--wash {
   color: var(--jf-red-deep);
+}
+
+.kicker--inverse {
+  color: var(--jf-text-inv);
 }
 
 /* Faixa de segurança — detalhe raro, usar com parcimônia */

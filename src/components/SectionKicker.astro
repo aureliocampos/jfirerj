@@ -1,10 +1,17 @@
 ---
 interface Props {
   label: string;
-  variant?: "default" | "wash";
+  variant?: "default" | "wash" | "inverse";
 }
 
 const { label, variant = "default" } = Astro.props;
 ---
 
-<p class:list={["kicker", { "kicker--wash": variant === "wash" }]}>{label}</p>
+<p
+  class:list={[
+    "kicker",
+    { "kicker--wash": variant === "wash", "kicker--inverse": variant === "inverse" },
+  ]}
+>
+  {label}
+</p>

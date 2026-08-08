@@ -9,19 +9,23 @@ const year = new Date().getFullYear();
 const navLinks = [
   { href: "#servicos", label: "Serviços" },
   { href: "#como-funciona", label: "Como funciona" },
-  { href: "#casos", label: "Casos" },
-  { href: "#contato", label: "Contato" },
 ];
 ---
 
 <footer class="footer section--anchor">
   <div class="container footer__grid">
     <div class="footer__brand">
-      <Image src={logo} alt="JFIRE" height={40} densities={[1, 2]} loading="lazy" />
+      <Image
+        src={logo}
+        alt="JFIRE"
+        height={40}
+        densities={[1, 2]}
+        loading="lazy"
+      />
       <p class="footer__summary">
         A JFire projeta, instala e regulariza sistemas de combate a incêndio
-        para empresas e condomínios no Rio de Janeiro, com equipe
-        credenciada e mais de 8 anos de atuação.
+        para empresas e condomínios no Rio de Janeiro, com equipe credenciada e
+        mais de 8 anos de atuação.
       </p>
       <ul class="footer__social">
         <li>
@@ -31,9 +35,14 @@ const navLinks = [
             rel="noopener noreferrer"
             aria-label="JFIRE no Facebook"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M14 8.5h2.5V5h-2.5c-2.2 0-4 1.8-4 4v2H8v3.5h2.5V21H14v-6.5h2.4l.6-3.5h-3V9c0-.5.5-1 1-1z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" fill="none" />
-            </svg>
+            <img
+              src={`${import.meta.env.BASE_URL}icon-facebook.svg`}
+              alt="Facebook"
+              width={40}
+              height={40}
+              loading="lazy"
+              decoding="async"
+            />
           </a>
         </li>
         <li>
@@ -43,11 +52,14 @@ const navLinks = [
             rel="noopener noreferrer"
             aria-label="JFIRE no Instagram"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.3" />
-              <circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.3" />
-              <circle cx="16.5" cy="7.5" r="0.9" fill="currentColor" />
-            </svg>
+            <img
+              src={`${import.meta.env.BASE_URL}icon-instagram.svg`}
+              alt="Instagram"
+              width={40}
+              height={40}
+              loading="lazy"
+              decoding="async"
+            />
           </a>
         </li>
         <li>
@@ -57,10 +69,14 @@ const navLinks = [
             rel="noopener noreferrer"
             aria-label="JFIRE no WhatsApp"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M12 3a9 9 0 00-7.8 13.4L3 21l4.7-1.2A9 9 0 1012 3z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
-              <path d="M8.7 8.3c.2-.4.4-.4.6-.4h.5c.2 0 .4 0 .5.4.2.4.6 1.5.7 1.6.1.2.1.3 0 .5-.1.2-.2.3-.4.5-.2.2-.4.4-.2.7.2.4.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.7 1.6.4.2.6.1.8-.1.2-.2.8-.9 1-1.2.2-.3.4-.2.7-.1.3.1 1.9.9 2.2 1 .3.2.5.2.6.4.1.2.1.9-.2 1.6-.3.7-1.6 1.4-2.2 1.4-.6.1-1.1.1-3.7-1-2.6-1.1-4.2-3.8-4.4-4-.2-.2-1.3-1.7-1.3-3.3 0-1.6.9-2.4 1.2-2.7z" fill="currentColor" />
-            </svg>
+            <img
+              src={`${import.meta.env.BASE_URL}icon-whatsapp.svg`}
+              alt="WhatsApp"
+              width={40}
+              height={40}
+              loading="lazy"
+              decoding="async"
+            />
           </a>
         </li>
       </ul>
@@ -76,6 +92,15 @@ const navLinks = [
             </li>
           ))
         }
+        <li>
+          <button
+            type="button"
+            class="footer__nav-button"
+            data-contact-drawer-open
+          >
+            Contato
+          </button>
+        </li>
       </ul>
     </nav>
 
@@ -84,7 +109,9 @@ const navLinks = [
       <ul class="footer__contact">
         <li>WhatsApp: {BUSINESS.whatsappDisplay}</li>
         <li>
-          <a href={phoneHref(BUSINESS.phoneDisplay)}>Tel: {BUSINESS.phoneDisplay}</a>
+          <a href={phoneHref(BUSINESS.phoneDisplay)}
+            >Tel: {BUSINESS.phoneDisplay}</a
+          >
         </li>
         <li>
           <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>
@@ -98,7 +125,9 @@ const navLinks = [
   <div class="container footer__legal">
     <!-- TODO(cliente): confirmar razão social e CNPJ -->
     <p>
-      {BUSINESS.legalName}{BUSINESS.cnpj && ` · CNPJ ${BUSINESS.cnpj}`} &copy; {year}
+      {BUSINESS.legalName}{BUSINESS.cnpj && ` · CNPJ ${BUSINESS.cnpj}`} &copy; {
+        year
+      }
       {BUSINESS.name}. Todos os direitos reservados.
     </p>
   </div>
@@ -136,22 +165,22 @@ const navLinks = [
 
   .footer__social a {
     display: inline-flex;
-    align-items: center;
-    justify-content: center;
     width: 2.5rem;
     height: 2.5rem;
-    border: 1px solid rgb(244 242 238 / 25%);
     border-radius: var(--jf-radius-pill);
-    color: var(--jf-text-inv-mut);
-    transition:
-      color 0.2s,
-      border-color 0.2s;
+    overflow: hidden;
+    transition: transform 0.2s;
   }
 
   .footer__social a:hover,
   .footer__social a:focus-visible {
-    color: var(--jf-text-inv);
-    border-color: var(--jf-red-bright);
+    transform: scale(1.08);
+  }
+
+  .footer__social img {
+    width: 100%;
+    height: 100%;
+    filter: invert(1);
   }
 
   .footer__heading {
@@ -176,6 +205,23 @@ const navLinks = [
   .footer__nav a:focus-visible,
   .footer__contact a:hover,
   .footer__contact a:focus-visible {
+    color: var(--jf-text-inv);
+  }
+
+  .footer__nav-button {
+    font-family: inherit;
+    font-size: inherit;
+    color: var(--jf-text-inv-mut);
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .footer__nav-button:hover,
+  .footer__nav-button:focus-visible {
     color: var(--jf-text-inv);
   }
 
