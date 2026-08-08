@@ -1,6 +1,6 @@
 @import "./tokens.css";
 
-/* Tipografia fluida (WCAG 1.4.4 — piso/teto em rem) */
+/* Tipografia fluida (WCAG 1.4.4 — piso/teto em rem, nunca vw puro) */
 :root {
   --fs-kicker: clamp(0.75rem, calc(14 * var(--jf-u)), 0.875rem);
   --fs-body: clamp(1rem, calc(18 * var(--jf-u)), 1.125rem);
@@ -39,7 +39,7 @@ body {
   font-family: var(--jf-font-body);
   font-size: var(--fs-body);
   line-height: 1.6;
-  color: var(--jf-text);
+  color: var(--jf-ink);
   background-color: var(--jf-bg);
   -webkit-font-smoothing: antialiased;
 }
@@ -77,12 +77,60 @@ ul {
   list-style: none;
 }
 
-/* Utilitários */
+/* Foco visível */
+:focus-visible {
+  outline: 2px solid var(--jf-red-bright);
+  outline-offset: 3px;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: var(--jf-space-md);
+  z-index: 1000;
+  padding: 0.75em 1.25em;
+  background-color: var(--jf-red);
+  color: var(--jf-on-brand);
+  border-radius: var(--jf-radius-sm);
+  font-weight: 600;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: var(--jf-space-md);
+}
+
+/* Layout */
 .container {
   width: 100%;
-  max-width: var(--jf-container-max);
+  max-width: var(--jf-maxw);
   margin-inline: auto;
   padding-inline: var(--jf-container-pad);
+}
+
+.section {
+  padding-block: var(--jf-space-2xl);
+}
+
+.section--light {
+  background-color: var(--jf-bg);
+  color: var(--jf-ink);
+}
+
+.section--alt {
+  background-color: var(--jf-bg-alt);
+  color: var(--jf-ink);
+}
+
+.section--wash {
+  background-color: var(--jf-red-wash);
+  color: var(--jf-ink);
+}
+
+.section--anchor {
+  background-color: var(--jf-anchor);
+  color: var(--jf-text-inv);
 }
 
 /* Cabeçalho de seção centralizado (kicker + h2 + linha de apoio opcional) */
@@ -97,43 +145,13 @@ ul {
   margin-bottom: 0;
 }
 
-.section {
-  padding-block: var(--jf-space-2xl);
-}
-
-.section--dark {
-  background-color: var(--jf-ink);
-  color: var(--jf-text-inv);
-}
-
-.section--light {
-  background-color: var(--jf-bg);
-  color: var(--jf-text);
-}
-
-.section--surface {
-  background-color: var(--jf-surface);
-  color: var(--jf-text);
-}
-
-/* Textura faixa de segurança */
-.stripe-divider {
-  height: 4px;
-  background: repeating-linear-gradient(
-    -45deg,
-    var(--jf-stripe-yellow),
-    var(--jf-stripe-yellow) 8px,
-    var(--jf-stripe-black) 8px,
-    var(--jf-stripe-black) 16px
-  );
-}
-
 /* Botões */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--jf-space-sm);
+  min-height: 44px;
   padding: 0.875em 1.5em;
   font-family: var(--jf-font-body);
   font-size: var(--fs-body);
@@ -146,25 +164,37 @@ ul {
     background-color 0.2s,
     border-color 0.2s,
     color 0.2s,
-    transform 0.2s;
+    transform 0.15s;
   text-align: center;
 }
 
 .btn--primary {
-  background-color: var(--jf-ember-700);
+  background-color: var(--jf-red);
   color: var(--jf-on-brand);
-  border-color: var(--jf-ember-700);
+  border-color: var(--jf-red);
 }
 
 .btn--primary:hover,
 .btn--primary:focus-visible {
-  background-color: var(--jf-ember-800);
-  border-color: var(--jf-ember-800);
+  background-color: var(--jf-red-deep);
+  border-color: var(--jf-red-deep);
   transform: translateY(-1px);
 }
 
 .btn--primary:active {
   transform: translateY(0);
+}
+
+.btn--outline {
+  background-color: transparent;
+  color: var(--jf-ink);
+  border-color: var(--jf-ink);
+}
+
+.btn--outline:hover,
+.btn--outline:focus-visible {
+  border-color: var(--jf-red);
+  color: var(--jf-red-deep);
 }
 
 .btn--outline-light {
@@ -179,49 +209,39 @@ ul {
   color: var(--jf-text-inv);
 }
 
-.btn--outline-dark {
-  background-color: transparent;
-  color: var(--jf-text);
-  border-color: var(--jf-border);
+/* Kicker mono acima dos h2 */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  margin-bottom: var(--jf-space-md);
+  font-family: var(--jf-font-mono);
+  font-size: var(--fs-kicker);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--jf-red);
 }
 
-.btn--outline-dark:hover,
-.btn--outline-dark:focus-visible {
-  border-color: var(--jf-ember-500);
-  color: var(--jf-fire-600);
+.kicker--wash {
+  color: var(--jf-red-deep);
 }
 
-/* Foco visível */
-:focus-visible {
-  outline: 2px solid var(--jf-flame-500);
-  outline-offset: 3px;
+/* Faixa de segurança — detalhe raro, usar com parcimônia */
+.stripe-divider {
+  height: 4px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--jf-stripe-a),
+    var(--jf-stripe-a) 8px,
+    var(--jf-stripe-b) 8px,
+    var(--jf-stripe-b) 16px
+  );
+  opacity: 0.85;
 }
 
-/* Grafismo blueprint (fundo decorativo) */
-.blueprint-bg {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.06' stroke-width='0.5'%3E%3Cpath d='M0 50h100M50 0v100'/%3E%3Ccircle cx='50' cy='50' r='20'/%3E%3Ccircle cx='50' cy='50' r='35'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: 80px 80px;
-}
-
-/* Corte diagonal entre seções — implementado como um triângulo decorativo
-   (pseudo-elemento) que se sobrepõe ao vizinho, na mesma cor de fundo da
-   seção. O conteúdo real nunca é clipado (evita cortar texto/imagem). */
-.diagonal-bottom {
-  position: relative;
-}
-
-/* .diagonal-bottom::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: calc(-1 * var(--jf-diagonal) + 1px);
-  height: var(--jf-diagonal);
-  background-color: inherit;
-  clip-path: polygon(0 0, 100% 100%, 0 100%);
-  pointer-events: none;
-} */
-
+/* Corte diagonal entre seções — pseudo-elemento sobreposto, nunca corta
+   conteúdo real (texto/imagem). Discreto no tema claro. */
 .diagonal-top {
   position: relative;
 }
@@ -236,4 +256,37 @@ ul {
   background-color: inherit;
   clip-path: polygon(100% 0, 100% 100%, 0 100%);
   pointer-events: none;
+}
+
+.diagonal-bottom {
+  position: relative;
+}
+
+.diagonal-bottom::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(-1 * var(--jf-diagonal) + 1px);
+  height: var(--jf-diagonal);
+  background-color: inherit;
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+
+/* Visually hidden, mas acessível a leitor de tela */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+[data-pending] {
+  position: relative;
 }

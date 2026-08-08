@@ -1,108 +1,115 @@
 ---
 import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 import SectionKicker from "./SectionKicker.astro";
 import WhatsAppLink from "./WhatsAppLink.astro";
 import heroImage from "../assets/placeholders/hero.jpg";
 ---
 
 <!--
-  TODO(cliente): substituir por foto real do Hero (bombeiro/técnico em
-  ação ou sistema instalado). Placeholder atual: sala de bombas de
-  hidrante, foto "Fire Pump Room, Brisbane" (Wikimedia Commons,
-  CC BY-SA 4.0, autor: Bidgee) — usada só até a foto real chegar.
+  TODO(cliente): substituir por foto real do Hero (bombeiro/técnico em ação
+  ou sistema instalado). Placeholder atual: sala de bombas de hidrante,
+  foto "Fire Pump Room, Brisbane" (Wikimedia Commons, CC BY-SA 4.0,
+  autor: Bidgee) — usada só até a foto real chegar.
 -->
-<section class="hero section--dark diagonal-bottom" aria-labelledby="hero-title">
-  <Image
-    src={heroImage}
-    alt=""
-    class="hero__bg"
-    widths={[480, 768, 1280, 1920]}
-    sizes="100vw"
-    quality={35}
-    loading="eager"
-    fetchpriority="high"
-  />
-  <div class="hero__overlay" aria-hidden="true"></div>
-  <div class="hero__content container">
-    <SectionKicker
-      label="Prevenção e combate a incêndio · Rio de Janeiro"
-      variant="dark"
-    />
-    <h1 id="hero-title" class="hero__title">
-      Proteção contra incêndio que mantém seu imóvel seguro e regularizado
-    </h1>
-    <p class="hero__desc">
-      Instalação e manutenção de sistemas de combate a incêndio para condomínios
-      e empresas no Rio de Janeiro. Do projeto à execução, com conformidade
-      junto ao Corpo de Bombeiros.
-    </p>
-    <div class="hero__actions">
-      <WhatsAppLink
-        messageKey="hero_specialist"
-        ariaLabel="Falar com um especialista pelo WhatsApp"
-      >
-        Falar com um especialista
-      </WhatsAppLink>
-      <a href="#condominios" class="btn btn--outline-light">
-        Solicitar orçamento
-      </a>
+<section id="topo" class="hero section--light" aria-labelledby="hero-title">
+  <div class="container hero__grid">
+    <div class="hero__content">
+      <SectionKicker label="Projeto · Instalação · Regularização" />
+      <h1 id="hero-title" class="hero__title">
+        Segurança contra incêndio para sua empresa ou condomínio operar
+        seguro e em conformidade
+      </h1>
+      <p class="hero__desc">
+        A JFire projeta, instala e regulariza sprinkler, alarme, hidrantes e
+        para-raios. Equipe credenciada pelo CREA, CAU e Corpo de Bombeiros,
+        com mais de 8 anos protegendo edificações no Rio.
+      </p>
+      <div class="hero__actions">
+        <WhatsAppLink messageKey="hero" ariaLabel="Solicitar orçamento pelo WhatsApp">
+          Solicitar orçamento
+        </WhatsAppLink>
+        <a href="#como-funciona" class="btn btn--outline">
+          Ver como funciona
+          <Icon name="lucide:arrow-down" aria-hidden="true" width={18} height={18} />
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__media" data-pending>
+      <Image
+        src={heroImage}
+        alt="Instalação de sistema de combate a incêndio"
+        widths={[480, 768, 1024]}
+        sizes="(min-width: 900px) 45vw, 100vw"
+        quality={45}
+        loading="eager"
+        fetchpriority="high"
+        class="hero__image"
+      />
     </div>
   </div>
 </section>
 
 <style>
   .hero {
-    position: relative;
-    min-height: clamp(28rem, 80vh, 40rem);
-    display: flex;
-    align-items: center;
     padding-block: var(--jf-space-2xl);
-    background-color: var(--jf-graphite-900);
   }
 
-  .hero__bg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 60%;
-  }
-
-  .hero__overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      135deg,
-      rgb(12 14 18 / 92%) 0%,
-      rgb(12 14 18 / 75%) 50%,
-      rgb(12 14 18 / 85%) 100%
-    );
-    pointer-events: none;
+  .hero__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--jf-space-xl);
+    align-items: center;
   }
 
   .hero__content {
-    position: relative;
-    z-index: 1;
+    order: 1;
   }
 
   .hero__title {
     font-size: var(--fs-h1);
     font-weight: 800;
-    color: var(--jf-text-inv);
+    color: var(--jf-ink);
     margin-bottom: var(--jf-space-md);
   }
 
   .hero__desc {
     font-size: var(--fs-body);
-    color: var(--jf-text-inv-mut);
+    color: var(--jf-ink-2);
     margin-bottom: var(--jf-space-xl);
-    max-width: 36rem;
+    max-width: 34rem;
   }
 
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
     gap: var(--jf-space-md);
+  }
+
+  .hero__media {
+    order: 2;
+    position: relative;
+    border: 1px solid var(--jf-border);
+    border-radius: var(--jf-radius-sm);
+    overflow: hidden;
+  }
+
+  .hero__image {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  @media (min-width: 900px) {
+    .hero__grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: var(--jf-space-2xl);
+    }
+
+    .hero__media {
+      order: 2;
+    }
   }
 </style>

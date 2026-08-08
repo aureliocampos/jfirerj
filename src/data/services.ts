@@ -2,48 +2,49 @@ export interface Service {
   id: string;
   title: string;
   description: string;
-  icon: "sprinkler" | "hydrant" | "alarm" | "light" | "sign" | "smoke";
+  icon: string;
 }
 
 export const services: Service[] = [
   {
     id: "sprinkler",
-    title: "Sprinkler (chuveiros automáticos)",
+    title: "Sistema de sprinkler",
     description:
-      "Supressão que age no início do incêndio, antes que ele se alastre.",
-    icon: "sprinkler",
+      "Chuveiros automáticos que detectam e combatem o fogo no início, antes de se espalhar.",
+    icon: "lucide:shower-head",
   },
   {
-    id: "hydrant",
-    title: "Rede de hidrantes",
+    id: "alarme",
+    title: "Alarme e detecção",
     description:
-      "Instalação e inspeção de redes hidráulicas de combate, com vazão e pressão dentro da norma.",
-    icon: "hydrant",
+      "Detectores e centrais que avisam a tempo de evacuar e agir.",
+    icon: "lucide:siren",
   },
   {
-    id: "alarm",
-    title: "Detecção e alarme",
+    id: "hidrantes",
+    title: "Hidrantes e mangueiras",
     description:
-      "Monitoramento inteligente que identifica o foco e alerta em segundos.",
-    icon: "alarm",
+      "Rede dimensionada para garantir vazão e pressão no combate ao fogo.",
+    icon: "lucide:fire-extinguisher",
   },
   {
-    id: "light",
-    title: "Iluminação de emergência",
-    description: "Visibilidade e rota segura quando falta energia.",
-    icon: "light",
-  },
-  {
-    id: "sign",
-    title: "Sinalização de emergência",
+    id: "para-raios",
+    title: "Para-raios (SPDA)",
     description:
-      "Identificação dos equipamentos e orientação da rota de fuga.",
-    icon: "sign",
+      "Proteção da edificação contra descargas atmosféricas, conforme norma.",
+    icon: "lucide:zap",
   },
   {
-    id: "smoke",
-    title: "Pressurização e detecção de fumaça",
-    description: "Controle da fumaça para manter as saídas livres.",
-    icon: "smoke",
+    id: "projeto",
+    title: "Projeto técnico e ART",
+    description:
+      "Projeto assinado por responsável técnico, base para a aprovação no Corpo de Bombeiros.",
+    icon: "lucide:drafting-compass",
+  },
+  {
+    id: "manutencao",
+    title: "Manutenção e laudos",
+    description: "Preventiva, recarga e laudos que mantêm seu AVCB válido.",
+    icon: "lucide:wrench",
   },
 ];

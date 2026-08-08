@@ -1,0 +1,457 @@
+---
+import { Icon } from "astro-icon/components";
+import SectionKicker from "./SectionKicker.astro";
+import WhatsAppLink from "./WhatsAppLink.astro";
+import PlaceholderLogo from "./PlaceholderLogo.astro";
+import { cases } from "../data/cases.ts";
+---
+
+<!--
+  TODO(cliente): apesar do DESIGN_DOC apontar as fotos dos casos como
+  recebidas, os arquivos não estão em src/assets/cases/. Até chegarem,
+  cada card usa PlaceholderPhoto (data-pending).
+-->
+<section id="casos" class="cases section section--alt" aria-labelledby="cases-title">
+  <div class="container">
+    <div class="section-header">
+      <SectionKicker label="Casos de sucesso" />
+      <h2 id="cases-title" class="cases__title">
+        Empresas e condomínios que já confiam na JFire
+      </h2>
+      <p class="cases__lead">
+        De supermercados e hotéis a academias e condomínios, entregamos
+        projetos que passam na vistoria e protegem quem está dentro.
+      </p>
+    </div>
+
+    <ul class="cases__grid">
+      {
+        cases.map((item, index) => (
+          <li class="cases__card">
+            <button
+              type="button"
+              class="cases__trigger"
+              data-lightbox-trigger
+              data-index={index}
+              data-name={item.name}
+              data-segment={item.segment}
+              data-result={item.result}
+              aria-label={`Ver detalhes do caso ${item.name}`}
+            >
+              <PlaceholderLogo name={item.name} variant="photo" />
+              <span class="cases__badge">{item.segment}</span>
+            </button>
+            <h3 class="cases__name">{item.name}</h3>
+            <p class="cases__result">{item.result}</p>
+            <div class="cases__actions">
+              <span class="cases__pdf" data-pending>
+                <Icon name="lucide:file-down" width={16} height={16} aria-hidden="true" />
+                Ver projeto (PDF) — em breve
+              </span>
+              <WhatsAppLink
+                caseClientName={item.name}
+                variant="outline"
+                class="cases__cta"
+                ariaLabel={`Quero um projeto como o da ${item.name}, pelo WhatsApp`}
+              >
+                Quero um projeto assim
+              </WhatsAppLink>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div
+    class="lightbox"
+    data-lightbox
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="lightbox-title"
+    hidden
+  >
+    <div class="lightbox__backdrop" data-lightbox-close></div>
+    <div class="lightbox__panel">
+      <button
+        type="button"
+        class="lightbox__close"
+        data-lightbox-close
+        aria-label="Fechar"
+      >
+        <Icon name="lucide:x" width={22} height={22} aria-hidden="true" />
+      </button>
+      <button
+        type="button"
+        class="lightbox__nav lightbox__nav--prev"
+        data-lightbox-prev
+        aria-label="Caso anterior"
+      >
+        <Icon name="lucide:chevron-left" width={22} height={22} aria-hidden="true" />
+      </button>
+      <button
+        type="button"
+        class="lightbox__nav lightbox__nav--next"
+        data-lightbox-next
+        aria-label="Próximo caso"
+      >
+        <Icon name="lucide:chevron-right" width={22} height={22} aria-hidden="true" />
+      </button>
+
+      <div class="lightbox__media" data-lightbox-media data-pending>
+        <span class="lightbox__media-name" data-lightbox-media-name></span>
+        <span class="lightbox__media-tag">Foto pendente</span>
+      </div>
+      <p class="lightbox__segment" data-lightbox-segment></p>
+      <h3 id="lightbox-title" class="lightbox__name" data-lightbox-name></h3>
+      <p class="lightbox__result" data-lightbox-result></p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const cases = document.querySelectorAll<HTMLButtonElement>(
+    "[data-lightbox-trigger]",
+  );
+  const lightbox = document.querySelector<HTMLElement>("[data-lightbox]");
+  const closeButtons = document.querySelectorAll<HTMLButtonElement>(
+    "[data-lightbox-close]",
+  );
+  const prevButton = document.querySelector<HTMLButtonElement>(
+    "[data-lightbox-prev]",
+  );
+  const nextButton = document.querySelector<HTMLButtonElement>(
+    "[data-lightbox-next]",
+  );
+  const nameEl = document.querySelector<HTMLElement>(
+    "[data-lightbox-name]",
+  );
+  const segmentEl = document.querySelector<HTMLElement>(
+    "[data-lightbox-segment]",
+  );
+  const resultEl = document.querySelector<HTMLElement>(
+    "[data-lightbox-result]",
+  );
+  const mediaNameEl = document.querySelector<HTMLElement>(
+    "[data-lightbox-media-name]",
+  );
+
+  const items = Array.from(cases);
+  let currentIndex = 0;
+  let triggerEl: HTMLElement | null = null;
+
+  function render(index: number) {
+    const item = items[index];
+    if (!item) return;
+    currentIndex = index;
+    if (nameEl) nameEl.textContent = item.dataset.name ?? "";
+    if (segmentEl) segmentEl.textContent = item.dataset.segment ?? "";
+    if (resultEl) resultEl.textContent = item.dataset.result ?? "";
+    if (mediaNameEl) mediaNameEl.textContent = item.dataset.name ?? "";
+  }
+
+  function getFocusable(): HTMLElement[] {
+    if (!lightbox) return [];
+    return Array.from(
+      lightbox.querySelectorAll<HTMLElement>(
+        'button, a[href], [tabindex]:not([tabindex="-1"])',
+      ),
+    ).filter(
+      (el) => el instanceof HTMLElement && !el.hasAttribute("disabled"),
+    );
+  }
+
+  function open(index: number, trigger: HTMLElement) {
+    if (!lightbox) return;
+    triggerEl = trigger;
+    render(index);
+    lightbox.hidden = false;
+    document.body.classList.add("menu-open");
+    const focusable = getFocusable();
+    focusable[0]?.focus();
+    document.addEventListener("keydown", onKeydown);
+  }
+
+  function close() {
+    if (!lightbox) return;
+    lightbox.hidden = true;
+    document.body.classList.remove("menu-open");
+    document.removeEventListener("keydown", onKeydown);
+    triggerEl?.focus();
+    triggerEl = null;
+  }
+
+  function onKeydown(event: KeyboardEvent) {
+    if (event.key === "Escape") {
+      close();
+      return;
+    }
+    if (event.key === "ArrowRight") {
+      render((currentIndex + 1) % items.length);
+      return;
+    }
+    if (event.key === "ArrowLeft") {
+      render((currentIndex - 1 + items.length) % items.length);
+      return;
+    }
+    if (event.key === "Tab") {
+      const focusable = getFocusable();
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  }
+
+  items.forEach((trigger, index) => {
+    trigger.addEventListener("click", () => open(index, trigger));
+  });
+
+  closeButtons.forEach((btn) => btn.addEventListener("click", close));
+  prevButton?.addEventListener("click", () =>
+    render((currentIndex - 1 + items.length) % items.length),
+  );
+  nextButton?.addEventListener("click", () =>
+    render((currentIndex + 1) % items.length),
+  );
+</script>
+
+<style>
+  .cases__title {
+    font-size: var(--fs-h2);
+    font-weight: 800;
+  }
+
+  .cases__lead {
+    color: var(--jf-ink-2);
+    margin-top: var(--jf-space-sm);
+  }
+
+  .cases__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--jf-space-lg);
+  }
+
+  .cases__card {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--jf-surface);
+    border: 1px solid var(--jf-border);
+    border-radius: var(--jf-radius-xs);
+    overflow: hidden;
+  }
+
+  .cases__trigger {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .cases__trigger :global(.placeholder-logo--photo) {
+    border-radius: 0;
+    border-width: 0 0 1px;
+  }
+
+  .cases__badge {
+    position: absolute;
+    top: var(--jf-space-sm);
+    left: var(--jf-space-sm);
+    padding: 0.25em 0.75em;
+    background-color: var(--jf-red-wash);
+    color: var(--jf-red-deep);
+    font-family: var(--jf-font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: var(--jf-radius-pill);
+  }
+
+  .cases__name {
+    padding: var(--jf-space-md) var(--jf-space-md) 0;
+    font-size: 1.0625rem;
+    font-weight: 700;
+  }
+
+  .cases__result {
+    padding: var(--jf-space-sm) var(--jf-space-md) 0;
+    color: var(--jf-ink-2);
+    font-size: 0.875rem;
+    flex-grow: 1;
+  }
+
+  .cases__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--jf-space-sm);
+    padding: var(--jf-space-md);
+  }
+
+  .cases__pdf {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-size: 0.8125rem;
+    color: var(--jf-ink-2);
+  }
+
+  .cases__cta {
+    font-size: 0.875rem;
+    padding: 0.6em 1.1em;
+  }
+
+  /* Lightbox */
+  .lightbox[hidden] {
+    display: none;
+  }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--jf-space-lg);
+  }
+
+  .lightbox__backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgb(35 36 31 / 70%);
+  }
+
+  .lightbox__panel {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 32rem;
+    padding: var(--jf-space-xl);
+    background-color: var(--jf-surface);
+    border-radius: var(--jf-radius-sm);
+  }
+
+  .lightbox__close {
+    position: absolute;
+    top: var(--jf-space-sm);
+    right: var(--jf-space-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    background: none;
+    border: none;
+    color: var(--jf-ink);
+    cursor: pointer;
+  }
+
+  .lightbox__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    background-color: var(--jf-surface);
+    border: 1px solid var(--jf-border);
+    border-radius: var(--jf-radius-pill);
+    color: var(--jf-ink);
+    cursor: pointer;
+  }
+
+  .lightbox__nav--prev {
+    left: calc(-1 * var(--jf-space-xl));
+  }
+
+  .lightbox__nav--next {
+    right: calc(-1 * var(--jf-space-xl));
+  }
+
+  .lightbox__media {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--jf-space-xs);
+    aspect-ratio: 4 / 3;
+    margin-bottom: var(--jf-space-md);
+    background-color: var(--jf-bg-alt);
+    border: 1px dashed var(--jf-border);
+    border-radius: var(--jf-radius-xs);
+    color: var(--jf-ink-2);
+    text-align: center;
+  }
+
+  .lightbox__media-name {
+    font-family: var(--jf-font-mono);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .lightbox__media-tag {
+    font-family: var(--jf-font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--jf-red-deep);
+  }
+
+  .lightbox__segment {
+    font-family: var(--jf-font-mono);
+    font-size: var(--fs-kicker);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--jf-red-deep);
+    margin-bottom: var(--jf-space-xs);
+  }
+
+  .lightbox__name {
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    margin-bottom: var(--jf-space-sm);
+  }
+
+  .lightbox__result {
+    color: var(--jf-ink-2);
+  }
+
+  @media (min-width: 640px) {
+    .cases__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .cases__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .lightbox__nav--prev {
+      left: var(--jf-space-sm);
+    }
+
+    .lightbox__nav--next {
+      right: var(--jf-space-sm);
+    }
+  }
+</style>

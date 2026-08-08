@@ -1,16 +1,14 @@
-/** TODO(cliente): substituir por logos reais quando disponíveis */
+/** TODO(cliente): substituir por arquivos de logo reais quando disponíveis */
 export const clients: string[] = [
-  "Vianense",
+  "Supermercados Vianense",
+  "Bluefit",
   "Paineiras Corcovado",
-  "Basile Advogados",
-  "Localiza Hertz",
-  "Hospital Vital",
   "Drogarias Tamoio",
+  "Mr. Cat",
   "Hotel Ibis",
-  "Rio Pax",
+  "Localiza",
   "Elbo",
+  "Rio Pax",
+  "Hospital Vital",
+  "Basile Advogados",
 ];
-
-/** TODO(cliente): confirmar número real de imóveis protegidos */
-export const proofNumber = "+XX";
-export const proofLabel = "imóveis protegidos no Rio de Janeiro";

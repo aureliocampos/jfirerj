@@ -1,29 +1,10 @@
 ---
 interface Props {
   label: string;
-  variant?: "light" | "dark";
+  variant?: "default" | "wash";
 }
 
-const { label, variant = "light" } = Astro.props;
+const { label, variant = "default" } = Astro.props;
 ---
 
-<p class:list={["section-kicker", `section-kicker--${variant}`]}>{label}</p>
-
-<style>
-  .section-kicker {
-    margin-bottom: var(--jf-space-md);
-    font-family: var(--jf-font-mono);
-    font-size: var(--fs-kicker);
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .section-kicker--light {
-    color: var(--jf-fire-600);
-  }
-
-  .section-kicker--dark {
-    color: var(--jf-flame-500);
-  }
-</style>
+<p class:list={["kicker", { "kicker--wash": variant === "wash" }]}>{label}</p>

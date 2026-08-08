@@ -1,0 +1,143 @@
+---
+import { Icon } from "astro-icon/components";
+import SectionKicker from "./SectionKicker.astro";
+import WhatsAppLink from "./WhatsAppLink.astro";
+
+const steps = [
+  {
+    icon: "lucide:clipboard-list",
+    title: "Diagnóstico e visita técnica",
+    description:
+      "Avaliamos sua edificação e o que a norma exige para o seu caso.",
+  },
+  {
+    icon: "lucide:pencil-ruler",
+    title: "Projeto e ART",
+    description:
+      "Elaboramos o projeto técnico assinado, pronto para aprovação.",
+  },
+  {
+    icon: "lucide:hard-hat",
+    title: "Instalação",
+    description:
+      "Nossa equipe instala o sistema com material de alta performance.",
+  },
+  {
+    icon: "lucide:badge-check",
+    title: "Regularização e laudos",
+    description: "Cuidamos da documentação e do laudo para o AVCB.",
+  },
+  {
+    icon: "lucide:calendar-check",
+    title: "Manutenção preventiva",
+    description:
+      "Mantemos o sistema em dia para renovar a validade sem sustos.",
+  },
+];
+---
+
+<section
+  id="como-funciona"
+  class="how section section--alt"
+  aria-labelledby="how-title"
+>
+  <div class="container">
+    <div class="section-header">
+      <SectionKicker label="Como funciona" />
+      <h2 id="how-title" class="how__title">
+        Do primeiro contato ao laudo, em cinco etapas
+      </h2>
+    </div>
+
+    <ol class="how__list">
+      {
+        steps.map((step, index) => (
+          <li class="how__step">
+            <div class="how__step-head">
+              <span class="how__number" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <Icon
+                name={step.icon}
+                width={24}
+                height={24}
+                class="how__icon"
+                aria-hidden="true"
+              />
+            </div>
+            <h3 class="how__step-title">{step.title}</h3>
+            <p class="how__step-desc">{step.description}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="how__footer">
+      <WhatsAppLink messageKey="how" ariaLabel="Solicitar diagnóstico pelo WhatsApp">
+        Solicitar diagnóstico
+      </WhatsAppLink>
+    </div>
+  </div>
+</section>
+
+<style>
+  .how__title {
+    font-size: var(--fs-h2);
+    font-weight: 800;
+  }
+
+  .how__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--jf-space-xl);
+    counter-reset: step;
+    margin-bottom: var(--jf-space-xl);
+  }
+
+  .how__step {
+    padding-top: var(--jf-space-md);
+    border-top: 2px solid var(--jf-border);
+  }
+
+  .how__step-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--jf-space-sm);
+    margin-bottom: var(--jf-space-sm);
+  }
+
+  .how__number {
+    font-family: var(--jf-font-display);
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--jf-red);
+    line-height: 1;
+  }
+
+  .how__icon {
+    color: var(--jf-ink-2);
+  }
+
+  .how__step-title {
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    margin-bottom: var(--jf-space-sm);
+  }
+
+  .how__step-desc {
+    color: var(--jf-ink-2);
+    font-size: 0.9375rem;
+  }
+
+  .how__footer {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    .how__list {
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--jf-space-lg);
+    }
+  }
+</style>

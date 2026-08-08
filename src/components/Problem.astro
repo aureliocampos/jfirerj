@@ -1,0 +1,129 @@
+---
+import { Icon } from "astro-icon/components";
+import SectionKicker from "./SectionKicker.astro";
+
+const cards = [
+  {
+    icon: "lucide:flame",
+    title: "Risco à vida e ao patrimônio",
+    description:
+      "Um sistema mal dimensionado ou sem manutenção não protege ninguém na hora do incêndio. O prejuízo vai de danos estruturais à perda total.",
+  },
+  {
+    icon: "lucide:ban",
+    title: "Multa e interdição",
+    description:
+      "Sem AVCB válido, a edificação fica sujeita a autuação, multa e interdição. Na prática, é parar de operar até regularizar.",
+  },
+  {
+    icon: "lucide:shield-off",
+    title: "Seguro negado",
+    description:
+      "Seguradoras exigem sistemas dentro das normas. Fora da regra, a cobertura pode ser recusada quando você mais precisa dela.",
+  },
+];
+---
+
+<section
+  id="problema"
+  class="problem section section--wash diagonal-top"
+  aria-labelledby="problem-title"
+>
+  <div class="container">
+    <div class="section-header">
+      <SectionKicker label="Por que isso importa" variant="wash" />
+      <h2 id="problem-title" class="problem__title">
+        Estar fora de conformidade custa caro, e a responsabilidade é sua
+      </h2>
+      <p class="problem__lead">
+        No Rio de Janeiro, toda edificação comercial e todo condomínio
+        precisam de sistemas de combate a incêndio aprovados e do AVCB em dia
+        para funcionar. Quando isso falha, quem responde é o gestor ou o
+        síndico.
+      </p>
+    </div>
+
+    <ul class="problem__grid">
+      {
+        cards.map((card) => (
+          <li class="problem__card">
+            <div class="problem__icon" aria-hidden="true">
+              <Icon name={card.icon} width={28} height={28} />
+            </div>
+            <h3 class="problem__card-title">{card.title}</h3>
+            <p class="problem__card-desc">{card.description}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="problem__bridge">
+      A JFire cuida disso de ponta a ponta, do projeto técnico ao laudo de
+      regularização, para sua edificação ficar segura e em conformidade.
+    </p>
+  </div>
+</section>
+
+<style>
+  .problem__title {
+    font-size: var(--fs-h2);
+    font-weight: 800;
+  }
+
+  .problem__lead {
+    color: var(--jf-ink-2);
+    margin-top: var(--jf-space-sm);
+  }
+
+  .problem__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--jf-space-lg);
+    margin-bottom: var(--jf-space-xl);
+  }
+
+  .problem__card {
+    padding: var(--jf-space-lg);
+    background-color: var(--jf-surface);
+    border: 1px solid var(--jf-border);
+    border-radius: var(--jf-radius-xs);
+  }
+
+  .problem__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: var(--jf-space-md);
+    background-color: var(--jf-red-wash);
+    color: var(--jf-red);
+    border-radius: var(--jf-radius-xs);
+  }
+
+  .problem__card-title {
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    margin-bottom: var(--jf-space-sm);
+  }
+
+  .problem__card-desc {
+    color: var(--jf-ink-2);
+    font-size: 0.9375rem;
+  }
+
+  .problem__bridge {
+    max-width: 40rem;
+    margin-inline: auto;
+    text-align: center;
+    font-weight: 600;
+    font-size: var(--fs-h3);
+    color: var(--jf-wine);
+  }
+
+  @media (min-width: 768px) {
+    .problem__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

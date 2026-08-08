@@ -1,0 +1,114 @@
+---
+import { stats } from "../data/stats.ts";
+---
+
+<section
+  class="stats section section--light"
+  aria-labelledby="stats-title"
+>
+  <div class="container">
+    <h2 id="stats-title" class="visually-hidden">Números da JFire</h2>
+    <ul class="stats__grid">
+      {
+        stats.map((stat) => (
+          <li class="stats__item">
+            <p class="stats__value">
+              <span
+                data-counter
+                data-target={stat.value}
+                aria-hidden="true"
+              >
+                0
+              </span><span aria-hidden="true">{stat.suffix}</span>
+              <span class="visually-hidden">
+                {stat.value.toLocaleString("pt-BR")}
+                {stat.suffix}
+              </span>
+            </p>
+            <p class="stats__label">{stat.label}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<script>
+  const counters = document.querySelectorAll<HTMLElement>("[data-counter]");
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  function animateCounter(el: HTMLElement) {
+    const target = Number(el.dataset.target ?? "0");
+    if (reduceMotion) {
+      el.textContent = target.toLocaleString("pt-BR");
+      return;
+    }
+    const duration = 1200;
+    const start = performance.now();
+
+    function tick(now: number) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = Math.round(target * eased);
+      el.textContent = value.toLocaleString("pt-BR");
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      }
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target as HTMLElement);
+          obs.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.5 },
+  );
+
+  counters.forEach((counter) => observer.observe(counter));
+</script>
+
+<style>
+  .stats__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--jf-space-xl);
+    text-align: center;
+  }
+
+  .stats__value {
+    font-family: var(--jf-font-display);
+    font-size: var(--fs-proof);
+    font-weight: 800;
+    color: var(--jf-red);
+    line-height: 1;
+    margin-bottom: var(--jf-space-sm);
+  }
+
+  .stats__item:nth-child(3n + 2) .stats__value {
+    color: var(--jf-wine);
+  }
+
+  .stats__label {
+    font-family: var(--jf-font-mono);
+    font-size: var(--fs-kicker);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--jf-ink-2);
+  }
+
+  @media (min-width: 640px) {
+    .stats__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

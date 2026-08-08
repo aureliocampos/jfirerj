@@ -1,28 +1,54 @@
 ---
+import { Icon } from "astro-icon/components";
 import SectionKicker from "./SectionKicker.astro";
-import { whyItems } from "../data/why.ts";
+import CredentialBadge from "./CredentialBadge.astro";
+import { credentials } from "../data/credentials.ts";
 
-const icons: Record<(typeof whyItems)[number]["icon"], string> = {
-  experience: `<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
-  team: `<circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.75" fill="none"/><circle cx="17" cy="9" r="2.5" stroke="currentColor" stroke-width="1.75" fill="none"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M14 15c2.8 0 5 2 5 5" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round"/>`,
-  compliance: `<rect x="5" y="4" width="14" height="16" rx="1" stroke="currentColor" stroke-width="1.75" fill="none"/><path d="M8 9h8M8 13h5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M8.5 17l1.5 1.5L13 15" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
-  support: `<path d="M4 12a8 8 0 0116 0" stroke="currentColor" stroke-width="1.75" fill="none"/><rect x="3" y="12" width="4" height="6" rx="1" stroke="currentColor" stroke-width="1.75" fill="none"/><rect x="17" y="12" width="4" height="6" rx="1" stroke="currentColor" stroke-width="1.75" fill="none"/><path d="M20 18v1a3 3 0 01-3 3h-4" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round"/>`,
-};
+const differentials = [
+  {
+    icon: "lucide:award",
+    title: "Experiência comprovada",
+    description: "Mais de 8 anos atuando em segurança contra incêndio no Rio.",
+  },
+  {
+    icon: "lucide:user-check",
+    title: "Atendimento sob medida",
+    description:
+      "Soluções dimensionadas para a realidade de cada empresa ou condomínio.",
+  },
+  {
+    icon: "lucide:graduation-cap",
+    title: "Equipe técnica especializada",
+    description: "Profissionais capacitados e em constante atualização.",
+  },
+  {
+    icon: "lucide:shield-check",
+    title: "Compromisso com a qualidade",
+    description:
+      "Material e equipamento de alta performance em cada instalação.",
+  },
+];
 ---
 
-<section class="why section section--light" aria-labelledby="why-title">
+<section
+  id="por-que"
+  class="why section section--light"
+  aria-labelledby="why-title"
+>
   <div class="container">
     <div class="section-header">
-      <SectionKicker label="Por que a JFIRE" />
-      <h2 id="why-title" class="why__title">Porque escolher a JFIRE</h2>
+      <SectionKicker label="Por que a JFire" />
+      <h2 id="why-title" class="why__title">
+        Responsabilidade técnica que você pode comprovar
+      </h2>
     </div>
 
     <ul class="why__grid">
       {
-        whyItems.map((item) => (
+        differentials.map((item) => (
           <li class="why__item">
             <div class="why__icon" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" set:html={icons[item.icon]} />
+              <Icon name={item.icon} width={30} height={30} />
             </div>
             <h3 class="why__item-title">{item.title}</h3>
             <p class="why__item-desc">{item.description}</p>
@@ -30,6 +56,16 @@ const icons: Record<(typeof whyItems)[number]["icon"], string> = {
         ))
       }
     </ul>
+
+    <div class="why__credentials">
+      <p class="why__credentials-text">
+        Credenciada e reconhecida pelo CREA, CAU/BR e Corpo de Bombeiros, com
+        serviços executados dentro das normas técnicas e exigências oficiais.
+      </p>
+      <div class="why__badges">
+        {credentials.map((credential) => <CredentialBadge credential={credential} />)}
+      </div>
+    </div>
   </div>
 </section>
 
@@ -43,6 +79,7 @@ const icons: Record<(typeof whyItems)[number]["icon"], string> = {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--jf-space-lg);
+    margin-bottom: var(--jf-space-xl);
   }
 
   .why__item {
@@ -51,7 +88,7 @@ const icons: Record<(typeof whyItems)[number]["icon"], string> = {
   }
 
   .why__icon {
-    color: var(--jf-fire-500);
+    color: var(--jf-red);
     margin-bottom: var(--jf-space-md);
   }
 
@@ -62,8 +99,28 @@ const icons: Record<(typeof whyItems)[number]["icon"], string> = {
   }
 
   .why__item-desc {
-    color: var(--jf-text-mut);
+    color: var(--jf-ink-2);
     font-size: 0.9375rem;
+  }
+
+  .why__credentials {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--jf-space-md);
+    padding-top: var(--jf-space-lg);
+    border-top: 1px solid var(--jf-border);
+  }
+
+  .why__credentials-text {
+    color: var(--jf-ink-2);
+    max-width: 32rem;
+  }
+
+  .why__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--jf-space-sm);
   }
 
   @media (min-width: 640px) {
@@ -88,6 +145,12 @@ const icons: Record<(typeof whyItems)[number]["icon"], string> = {
     .why__item:first-child {
       border-left: none;
       padding-inline-start: 0;
+    }
+
+    .why__credentials {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
     }
   }
 </style>

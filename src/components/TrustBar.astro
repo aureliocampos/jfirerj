@@ -1,0 +1,73 @@
+---
+import PlaceholderLogo from "./PlaceholderLogo.astro";
+import { clients } from "../data/clients.ts";
+---
+
+<section
+  class="trust-bar section--light"
+  aria-labelledby="trust-bar-title"
+>
+  <div class="container">
+    <h2 id="trust-bar-title" class="trust-bar__title">
+      Empresas e condomínios que confiam na JFire
+    </h2>
+    <ul class="trust-bar__grid">
+      {
+        clients.map((name) => (
+          <li class="trust-bar__item">
+            <PlaceholderLogo name={name} variant="logo" />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .trust-bar {
+    padding-block: var(--jf-space-xl);
+    border-bottom: 1px solid var(--jf-border);
+  }
+
+  .trust-bar__title {
+    font-size: var(--fs-kicker);
+    font-family: var(--jf-font-mono);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--jf-ink-2);
+    margin-bottom: var(--jf-space-lg);
+  }
+
+  .trust-bar__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--jf-space-md);
+  }
+
+  .trust-bar__item {
+    filter: grayscale(1);
+    opacity: 0.75;
+    transition:
+      filter 0.2s,
+      opacity 0.2s;
+  }
+
+  .trust-bar__item:hover,
+  .trust-bar__item:focus-within {
+    filter: grayscale(0);
+    opacity: 1;
+  }
+
+  @media (min-width: 640px) {
+    .trust-bar__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .trust-bar__grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+</style>

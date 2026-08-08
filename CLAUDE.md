@@ -2,8 +2,10 @@
 
 > Este arquivo é lido automaticamente pelo Claude Code. Ele define as regras
 > inegociáveis do projeto. Leia por completo antes de qualquer tarefa.
-> Detalhes de arquitetura estão em `docs/DESIGN_DOC.md` e o conteúdo/layout de
-> cada seção em `docs/SECTIONS.md`. **Sempre consulte os dois antes de codar.**
+> A estrutura, o copy e o layout de cada seção estão em `docs/SECTIONS.md`
+> (fonte única de estrutura). A arquitetura está em `docs/DESIGN_DOC.md`.
+> **Sempre consulte os dois antes de codar. Onde houver divergência, o
+> `SECTIONS.md` vence.**
 
 ## O que é este projeto
 
@@ -12,30 +14,37 @@ de sistemas de combate a incêndio para **condomínios e empresas** no Rio de
 Janeiro. Substitui um site WordPress antigo. Objetivo: **conversão via WhatsApp**
 e **máxima performance/SEO/GEO**. Público: síndicos e gestores prediais.
 
-Estética: **industrial / segurança contra incêndio**. NÃO pode parecer site de
-agência ou template corporativo genérico. Ver direção de arte no DESIGN_DOC.
+Estética: **clara, industrial, segurança contra incêndio**. Fundo claro, vermelho
+por acento, grafite só no rodapé, nada de preto como fundo. NÃO pode parecer site
+de agência ou template corporativo genérico. Ver direção de arte no DESIGN_DOC.
 
 ## Stack
 
-- **Astro** (saída 100% estática, zero JS por padrão).
+- **Astro** (saída 100% estática, zero JS de framework).
 - **GitHub Pages** como host, deploy só via GitHub Actions no merge para `main`.
-- Sem backend. Sem formulário. Conversão 100% por **deep link de WhatsApp**.
+- Sem backend. Conversão por **deep link de WhatsApp**. O formulário de contato
+  compõe o link a partir dos campos; não envia para servidor.
 - CSS puro com os **design tokens** do projeto (`src/styles/tokens.css`).
 
 ## Regras de ouro (não violar)
 
 1. **Não invente ativos de marca de terceiros.** Logos de clientes (Vianense,
-   Paineiras, etc.) e selos de credenciamento (CBMERJ, CREA, 3º) NÃO devem ser
-   gerados nem simulados. Use os componentes de placeholder neutro definidos no
-   DESIGN_DOC, com o nome em texto e marcador `data-pending`.
-2. **Não invente conteúdo do cliente.** Números (imóveis protegidos, anos),
-   telefones, respostas de FAQ: onde não houver dado real, use os placeholders
-   documentados e marque com `<!-- TODO(cliente): ... -->`. Ver seção PENDÊNCIAS.
-3. **Zero JS por padrão.** Só é permitido JS vanilla mínimo para: toggle do menu
-   mobile. Scroll suave deve ser CSS (`scroll-behavior`). Qualquer outro JS ou
-   dependência client-side exige justificativa antes de adicionar.
+   Paineiras, etc.) NÃO devem ser gerados nem simulados: use `PlaceholderLogo`
+   com o nome em texto e `data-pending`. Os selos de credenciamento (CBMERJ,
+   CAU/BR, CREA-RJ) e o logo da JFIRE já foram recebidos e são renderizados a
+   partir de `src/assets/` via os componentes reais.
+2. **Não invente conteúdo do cliente.** Onde não houver dado real (texto de cada
+   caso, 3º número de prova, fundos faltantes), use os placeholders documentados
+   e marque com `<!-- TODO(cliente): ... -->`. Ver PENDÊNCIAS no DESIGN_DOC.
+3. **JS só em ilha, e só onde indispensável.** Permitido, em ilha vanilla mínima:
+   toggle do menu mobile, lightbox da galeria de casos (com foco preso e
+   restaurado), animação dos contadores da seção Números, e composição do deep
+   link de WhatsApp no formulário de contato. Scroll suave é CSS
+   (`scroll-behavior`). Qualquer outro JS ou dependência client-side exige
+   justificativa no PR.
 4. **Não adicione dependências** sem necessidade. Prefira recursos nativos do
-   Astro (`astro:assets`, `@astrojs/sitemap`). Ao precisar de algo novo, pare e
+   Astro (`astro:assets`, `@astrojs/sitemap`). `astro-icon` com o set do Lucide é
+   permitido para inlinar ícones no build. Ao precisar de algo novo, pare e
    registre o motivo no PR.
 5. **Nada de deploy manual.** Nunca faça push na branch de publicação. O deploy
    é feito só pela Action no merge. Fluxo: branch → PR → merge → deploy.
@@ -44,13 +53,17 @@ agência ou template corporativo genérico. Ver direção de arte no DESIGN_DOC.
 7. **Domínio em um lugar só.** URLs absolutas vêm de `SITE_URL` em
    `src/config/site.ts`. Nunca escreva o domínio hardcoded em outro arquivo.
 8. **Acessibilidade é requisito, não extra.** AA de contraste, foco visível,
-   navegação por teclado, `alt` em toda imagem, `aria-label` no botão flutuante
-   e no menu mobile, FAQ com `<details>/<summary>` nativo.
+   navegação por teclado, foco movido para o heading na navegação por âncora,
+   `alt` em toda imagem, `aria-label` no botão flutuante e no menu mobile,
+   lightbox com foco restaurado ao fechar, `<label>` em todo campo do formulário.
 9. **Tipografia não pode ser `vw` puro.** Use os helpers `clamp()` com piso em
-   `rem` (WCAG 1.4.4). Ver DESIGN_DOC › Tipografia fluida. `--jf-u` é só para
-   layout/espaçamento.
-10. **HTML semântico.** Um único `<h1>`, hierarquia de headings correta,
-    `<header> <main> <section> <footer>`.
+   `rem` (WCAG 1.4.4). `--jf-u` é só para layout/espaçamento.
+10. **HTML semântico.** Um único `<h1>` (o do Hero), hierarquia de headings
+    correta, `<header> <main> <section> <footer>`, cada `<section>` com
+    `aria-labelledby`.
+11. **Layout mobile-first, container 1280.** CSS base para mobile, media queries
+    `min-width`. Conteúdo dentro de um container de `max-width: var(--jf-maxw)`
+    (1280px) centralizado; só fundos de ambiente sangram de borda a borda.
 
 ## Convenções
 
@@ -58,7 +71,7 @@ agência ou template corporativo genérico. Ver direção de arte no DESIGN_DOC.
 - **Branches:** `feat/<slug>`, `fix/<slug>`. PR para `main`. Sem commit direto em `main`.
 - **CSS:** BEM para classes customizadas; um bloco de estilo por componente.
 - **Arquivos:** componentes em PascalCase (`Hero.astro`), dados em `src/data/*.ts`.
-- **Idioma:** conteúdo/copy em pt-BR; identificadores de código em inglês.
+- **Idioma:** conteúdo/copy em pt-BR, sem travessão; identificadores de código em inglês.
 
 ## Comandos
 
@@ -76,21 +89,25 @@ npm run preview   # servir o build localmente
       (alvo 100). LCP < 2s, CLS ~0.
 - [ ] Nenhum token/hex mágico; tudo via `--jf-*`.
 - [ ] Nenhuma URL hardcoded fora de `site.ts`.
-- [ ] Todo placeholder de marca/dado tem marcador `data-pending` / `TODO(cliente)`.
-- [ ] JSON-LD válido (LocalBusiness, FAQPage, Service).
-- [ ] Navegação por teclado e foco visível funcionando; `alt`/`aria-label` presentes.
-- [ ] Sem JS além do toggle do menu mobile.
+- [ ] Container em `max-width: var(--jf-maxw)`; layout valida em mobile, tablet e desktop.
+- [ ] Todo placeholder de marca/dado tem `data-pending` / `TODO(cliente)`.
+- [ ] JSON-LD válido (LocalBusiness, Service).
+- [ ] Navegação por teclado e foco visível; foco movido na âncora; `alt`/`aria-label` presentes.
+- [ ] Galeria de casos com lazy-load e lightbox acessível.
+- [ ] Sem JS além das ilhas documentadas (menu, lightbox, contadores, form→WhatsApp).
 
 ## Pendências do cliente (usar placeholder até chegar)
 
-Logos das empresas · 3 selos de credenciamento · foto real do Hero · números
-reais (imóveis/anos/tempo de resposta) · respostas oficiais do FAQ · confirmação
-dos telefones e do número oficial de WhatsApp. Lista completa e rastreável no
-DESIGN_DOC › Pendências.
+Texto de cada caso · 3º número de prova · PDFs de projeto por cliente · foto real
+do Hero · fundos de seção faltantes · logos dos clientes da barra de confiança ·
+imagem OG · validação das URLs de redes sociais. Já recebidos: logo da JFIRE,
+selos de credenciamento, fotos dos casos, número oficial de WhatsApp
+(`5521982006834`) e os números 789+ (projetos) e 1.000+ (orçamentos). Lista
+completa e rastreável no DESIGN_DOC › Pendências.
 
 ## Quando estiver em dúvida
 
 Siga a decisão documentada nos docs. Se a decisão não existir, **crie um
-placeholder + TODO e siga em frente** — não bloqueie a tarefa. A única exceção
-é ativo de marca de terceiro: nesse caso o placeholder neutro é a resposta
-final, nunca gere o ativo real.
+placeholder + TODO e siga em frente**, não bloqueie a tarefa. A única exceção é
+ativo de marca de terceiro: nesse caso o placeholder neutro é a resposta final,
+nunca gere o ativo real.

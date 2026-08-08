@@ -2,28 +2,30 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
-import CredentialBar from "../components/CredentialBar.astro";
+import TrustBar from "../components/TrustBar.astro";
+import Problem from "../components/Problem.astro";
 import Services from "../components/Services.astro";
-import Segments from "../components/Segments.astro";
+import HowItWorks from "../components/HowItWorks.astro";
 import WhyJfire from "../components/WhyJfire.astro";
-import ClientsLogos from "../components/ClientsLogos.astro";
-import Faq from "../components/Faq.astro";
-import FinalCta from "../components/FinalCta.astro";
+import Cases from "../components/Cases.astro";
+import Stats from "../components/Stats.astro";
+import Contact from "../components/Contact.astro";
 import Footer from "../components/Footer.astro";
 import WhatsAppFab from "../components/WhatsAppFab.astro";
 ---
 
 <BaseLayout>
   <Header />
-  <main>
+  <main id="conteudo">
     <Hero />
-    <CredentialBar />
+    <TrustBar />
+    <Problem />
     <Services />
-    <Segments />
+    <HowItWorks />
     <WhyJfire />
-    <ClientsLogos />
-    <Faq />
-    <FinalCta />
+    <Cases />
+    <Stats />
+    <Contact />
   </main>
   <Footer />
   <WhatsAppFab />

@@ -2,15 +2,17 @@ export const SITE_URL =
   import.meta.env.SITE_URL ?? "https://aureliocampos.github.io";
 export const BASE_PATH = import.meta.env.BASE_PATH ?? "/jfirerj/";
 
-/** TODO(cliente): confirmar número oficial de WhatsApp */
-export const WHATSAPP_NUMBER = "5521969641666";
+export const WHATSAPP_NUMBER = "5521982006834";
+/** Telefone de exibição no Contato/Rodapé. Não é destino de CTA. */
+export const PHONE_DISPLAY = "21 96964-1666";
+export const WHATSAPP_DISPLAY = "21 98200-6834";
 
 export const SITE = {
   title:
     "Sistemas contra incêndio para condomínios e empresas | JFIRE — Rio de Janeiro",
   description:
-    "Instalação e manutenção de sistemas de combate a incêndio para condomínios e empresas no Rio de Janeiro. Sprinkler, hidrantes, detecção e laudos CBMERJ.",
-  themeColor: "#dc2626",
+    "A JFIRE projeta, instala e regulariza sprinkler, alarme, hidrantes e para-raios para condomínios e empresas no Rio de Janeiro. Equipe credenciada CREA, CAU e Corpo de Bombeiros.",
+  themeColor: "#c43932",
   lang: "pt-BR",
 } as const;
 
@@ -32,9 +34,10 @@ export const BUSINESS = {
     latitude: -22.8985,
     longitude: -43.1962,
   },
-  /** TODO(cliente): confirmar telefones */
-  phones: ["(21) 96964-1666", "(21) 98200-6834"],
-  email: "",
+  phoneDisplay: PHONE_DISPLAY,
+  whatsappDisplay: WHATSAPP_DISPLAY,
+  email: "comercial@jfirerj.com.br",
+  hours: "Seg a sáb, 08h às 20h",
   areaServed: "Rio de Janeiro",
 } as const;
 
@@ -47,28 +50,19 @@ export const SOCIAL = {
 export type WhatsAppMessageKey =
   | "float"
   | "header"
-  | "hero_specialist"
+  | "hero"
   | "services"
-  | "segment_condo"
-  | "segment_company"
-  | "faq"
-  | "footer";
+  | "how"
+  | "contact";
 
 export const WHATSAPP_MESSAGES: Record<WhatsAppMessageKey, string> = {
-  float: "Olá! Vim pelo site da JFIRE e gostaria de mais informações.",
-  header:
-    "*Contato pelo site* 👋\nOlá, JFIRE! Vim pelo site e gostaria de falar com vocês.",
-  hero_specialist:
-    "*Falar com especialista* 👋\nOlá, JFIRE! Vim pelo site e quero falar com um especialista sobre proteção contra incêndio.",
+  float: "Olá! Vim pelo site e quero falar com a JFire. *[Botão fixo]*",
+  header: "Olá! Vim pelo site e quero falar com a JFire. *[Header]*",
+  hero: "Olá! Vim pelo site e quero solicitar um orçamento de sistema contra incêndio. *[Hero]*",
   services:
-    "*Avaliação de imóvel* 🧯\nOlá, JFIRE! Vim pela seção de serviços e gostaria de uma avaliação do meu imóvel.",
-  segment_condo:
-    "*Orçamento · Condomínio* 🏢\nOlá, JFIRE! Vim pelo site e gostaria de um orçamento para o meu condomínio.",
-  segment_company:
-    "*Orçamento · Empresa* 🏭\nOlá, JFIRE! Vim pelo site e gostaria de um orçamento para a minha empresa.",
-  faq: "*Dúvida pelo site* ❓\nOlá, JFIRE! Não encontrei minha dúvida no site e gostaria de ajuda.",
-  footer:
-    "*Contato pelo site* 👋\nOlá, JFIRE! Vim pelo rodapé do site.",
+    "Olá! Vim pelo site e quero entender qual sistema minha edificação precisa. *[Serviços]*",
+  how: "Olá! Vim pelo site e quero solicitar um diagnóstico. *[Como funciona]*",
+  contact: "Olá! Vim pelo site e quero solicitar um orçamento. *[Contato]*",
 };
 
 export function absoluteUrl(path: string = ""): string {
@@ -79,7 +73,27 @@ export function absoluteUrl(path: string = ""): string {
 }
 
 export function whatsappUrl(key: WhatsAppMessageKey): string {
-  const text = WHATSAPP_MESSAGES[key];
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGES[key])}`;
+}
+
+/** CTA por card de caso: interpola o nome do cliente na mensagem. */
+export function whatsappCaseUrl(clientName: string): string {
+  const text = `Olá! Vim pelo site, vi o caso da ${clientName} e quero um projeto assim. *[Caso: ${clientName}]*`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+}
+
+/** Composição do deep link a partir do formulário de contato (ilha vanilla). */
+export function whatsappContactFormUrl(data: {
+  nome: string;
+  tipo: string;
+  mensagem: string;
+}): string {
+  const text = [
+    "Olá! Vim pelo site e quero solicitar um orçamento. *[Contato]*",
+    `Nome: ${data.nome}`,
+    `Tipo: ${data.tipo}`,
+    `Mensagem: ${data.mensagem}`,
+  ].join("\n");
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 }
 

@@ -1,0 +1,32 @@
+---
+import { absoluteUrl } from "../../config/site.ts";
+
+const target = absoluteUrl("#casos");
+---
+
+<!--
+  Stub de migração: a página /condominios/ do WordPress antigo foi
+  aposentada. GitHub Pages não faz 301 de servidor, então este stub preserva
+  o SEO com canonical para a home e redireciona (meta refresh + fallback JS)
+  para a seção de Casos de sucesso, que consolida o conteúdo de Empresas e
+  Condomínios na OnePage.
+-->
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JFIRE — Sistemas contra incêndio para condomínios</title>
+    <link rel="canonical" href={absoluteUrl()} />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <script define:vars={{ target }}>
+      window.location.replace(target);
+    </script>
+  </head>
+  <body>
+    <p>
+      Esta página foi unificada. <a href={target}>Clique aqui para ver os
+      casos de sucesso da JFIRE para condomínios</a>.
+    </p>
+  </body>
+</html>

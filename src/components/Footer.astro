@@ -1,60 +1,48 @@
 ---
 import { Image } from "astro:assets";
-import WhatsAppLink from "./WhatsAppLink.astro";
-import CredentialBadge from "./CredentialBadge.astro";
 import logo from "../assets/brand/jfire-logo.jpg";
-import { credentials } from "../data/credentials.ts";
 import { BUSINESS, SOCIAL, phoneHref } from "../config/site.ts";
 
 const fullAddress = `${BUSINESS.address.street}, ${BUSINESS.address.neighborhood}, ${BUSINESS.address.city}, ${BUSINESS.address.state}`;
-const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(fullAddress)}&z=15&output=embed`;
 const year = new Date().getFullYear();
+
+const navLinks = [
+  { href: "#servicos", label: "Serviços" },
+  { href: "#como-funciona", label: "Como funciona" },
+  { href: "#casos", label: "Casos" },
+  { href: "#contato", label: "Contato" },
+];
 ---
 
-<footer id="contato" class="footer section--dark">
-  <div class="container footer__logo">
-    <Image src={logo} alt="JFIRE" height={40} densities={[1, 2]} loading="lazy" />
-  </div>
+<footer class="footer section--anchor">
   <div class="container footer__grid">
-    <div class="footer__block">
-      <h2 class="footer__heading">Onde estamos</h2>
-      <p class="footer__address">{fullAddress}</p>
-      <div class="footer__map">
-        <iframe
-          src={mapSrc}
-          title={`Mapa — ${BUSINESS.name} em ${fullAddress}`}
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
-      </div>
-    </div>
-
-    <div class="footer__block">
-      <h2 class="footer__heading">Contato</h2>
-      <ul class="footer__contact">
-        {
-          BUSINESS.phones.map((phone) => (
-            <li>
-              <a href={phoneHref(phone)}>{phone}</a>
-            </li>
-          ))
-        }
-      </ul>
-      <WhatsAppLink messageKey="footer" variant="outline-light">
-        Falar no WhatsApp
-      </WhatsAppLink>
-
-      <h2 class="footer__heading footer__heading--social">Redes sociais</h2>
+    <div class="footer__brand">
+      <Image src={logo} alt="JFIRE" height={40} densities={[1, 2]} loading="lazy" />
+      <p class="footer__summary">
+        A JFire projeta, instala e regulariza sistemas de combate a incêndio
+        para empresas e condomínios no Rio de Janeiro, com equipe
+        credenciada e mais de 8 anos de atuação.
+      </p>
       <ul class="footer__social">
         <li>
-          <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer" aria-label="JFIRE no Facebook">
+          <a
+            href={SOCIAL.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="JFIRE no Facebook"
+          >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M14 8.5h2.5V5h-2.5c-2.2 0-4 1.8-4 4v2H8v3.5h2.5V21H14v-6.5h2.4l.6-3.5h-3V9c0-.5.5-1 1-1z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" fill="none" />
             </svg>
           </a>
         </li>
         <li>
-          <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="JFIRE no Instagram">
+          <a
+            href={SOCIAL.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="JFIRE no Instagram"
+          >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.3" />
               <circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.3" />
@@ -62,38 +50,63 @@ const year = new Date().getFullYear();
             </svg>
           </a>
         </li>
+        <li>
+          <a
+            href={`https://wa.me/${BUSINESS.whatsappDisplay.replace(/\D/g, "")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="JFIRE no WhatsApp"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3a9 9 0 00-7.8 13.4L3 21l4.7-1.2A9 9 0 1012 3z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+              <path d="M8.7 8.3c.2-.4.4-.4.6-.4h.5c.2 0 .4 0 .5.4.2.4.6 1.5.7 1.6.1.2.1.3 0 .5-.1.2-.2.3-.4.5-.2.2-.4.4-.2.7.2.4.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.7 1.6.4.2.6.1.8-.1.2-.2.8-.9 1-1.2.2-.3.4-.2.7-.1.3.1 1.9.9 2.2 1 .3.2.5.2.6.4.1.2.1.9-.2 1.6-.3.7-1.6 1.4-2.2 1.4-.6.1-1.1.1-3.7-1-2.6-1.1-4.2-3.8-4.4-4-.2-.2-1.3-1.7-1.3-3.3 0-1.6.9-2.4 1.2-2.7z" fill="currentColor" />
+            </svg>
+          </a>
+        </li>
       </ul>
     </div>
 
+    <nav class="footer__block" aria-label="Navegação do rodapé">
+      <h2 class="footer__heading">Navegação</h2>
+      <ul class="footer__nav">
+        {
+          navLinks.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
     <div class="footer__block">
-      <h2 class="footer__heading">Credenciamento</h2>
-      <div class="footer__badges">
-        {credentials.map((credential) => <CredentialBadge credential={credential} />)}
-      </div>
+      <h2 class="footer__heading">Contato</h2>
+      <ul class="footer__contact">
+        <li>WhatsApp: {BUSINESS.whatsappDisplay}</li>
+        <li>
+          <a href={phoneHref(BUSINESS.phoneDisplay)}>Tel: {BUSINESS.phoneDisplay}</a>
+        </li>
+        <li>
+          <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>
+        </li>
+        <li>{fullAddress}</li>
+        <li>{BUSINESS.hours}</li>
+      </ul>
     </div>
   </div>
 
   <div class="container footer__legal">
     <!-- TODO(cliente): confirmar razão social e CNPJ -->
-    <p>{BUSINESS.legalName}{BUSINESS.cnpj && ` · CNPJ ${BUSINESS.cnpj}`} · &copy; {year} {BUSINESS.name}. Todos os direitos reservados.</p>
+    <p>
+      {BUSINESS.legalName}{BUSINESS.cnpj && ` · CNPJ ${BUSINESS.cnpj}`} &copy; {year}
+      {BUSINESS.name}. Todos os direitos reservados.
+    </p>
   </div>
 </footer>
 
 <style>
   .footer {
     padding-block: var(--jf-space-2xl) var(--jf-space-xl);
-    background-color: var(--jf-graphite-900);
-    color: var(--jf-text-inv-mut);
-  }
-
-  .footer__logo {
-    margin-bottom: var(--jf-space-xl);
-  }
-
-  .footer__logo :global(img) {
-    height: 2.5rem;
-    width: auto;
-    border-radius: var(--jf-radius-sm);
   }
 
   .footer__grid {
@@ -103,48 +116,17 @@ const year = new Date().getFullYear();
     margin-bottom: var(--jf-space-xl);
   }
 
-  .footer__heading {
-    font-family: var(--jf-font-mono);
-    font-size: var(--fs-kicker);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--jf-text-inv);
+  .footer__brand :global(img) {
+    height: 2.25rem;
+    width: auto;
+    border-radius: var(--jf-radius-xs);
     margin-bottom: var(--jf-space-md);
   }
 
-  .footer__heading--social {
-    margin-top: var(--jf-space-lg);
-  }
-
-  .footer__address {
+  .footer__summary {
+    color: var(--jf-text-inv-mut);
+    max-width: 24rem;
     margin-bottom: var(--jf-space-md);
-  }
-
-  .footer__map {
-    border-radius: var(--jf-radius-sm);
-    overflow: hidden;
-    border: 1px solid var(--jf-border-dark);
-  }
-
-  .footer__map iframe {
-    width: 100%;
-    height: 200px;
-    border: 0;
-    display: block;
-  }
-
-  .footer__contact {
-    margin-bottom: var(--jf-space-md);
-  }
-
-  .footer__contact li {
-    margin-bottom: var(--jf-space-xs);
-  }
-
-  .footer__contact a:hover,
-  .footer__contact a:focus-visible {
-    color: var(--jf-text-inv);
   }
 
   .footer__social {
@@ -158,38 +140,55 @@ const year = new Date().getFullYear();
     justify-content: center;
     width: 2.5rem;
     height: 2.5rem;
-    border: 1px solid var(--jf-border-dark);
+    border: 1px solid rgb(244 242 238 / 25%);
     border-radius: var(--jf-radius-pill);
     color: var(--jf-text-inv-mut);
-    transition: color 0.2s, border-color 0.2s;
+    transition:
+      color 0.2s,
+      border-color 0.2s;
   }
 
   .footer__social a:hover,
   .footer__social a:focus-visible {
     color: var(--jf-text-inv);
-    border-color: var(--jf-flame-500);
+    border-color: var(--jf-red-bright);
   }
 
-  .footer__badges {
+  .footer__heading {
+    font-family: var(--jf-font-mono);
+    font-size: var(--fs-kicker);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--jf-text-inv);
+    margin-bottom: var(--jf-space-md);
+  }
+
+  .footer__nav,
+  .footer__contact {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: var(--jf-space-sm);
+    color: var(--jf-text-inv-mut);
+  }
+
+  .footer__nav a:hover,
+  .footer__nav a:focus-visible,
+  .footer__contact a:hover,
+  .footer__contact a:focus-visible {
+    color: var(--jf-text-inv);
   }
 
   .footer__legal {
     padding-top: var(--jf-space-lg);
-    border-top: 1px solid var(--jf-border-dark);
+    border-top: 1px solid rgb(244 242 238 / 15%);
+    color: var(--jf-text-inv-mut);
     font-size: 0.8125rem;
   }
 
   @media (min-width: 768px) {
     .footer__grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--jf-space-xl);
-    }
-
-    .footer__block {
-      width: 100%;
+      grid-template-columns: 1.4fr 1fr 1fr;
     }
   }
 </style>

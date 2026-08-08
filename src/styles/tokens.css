@@ -1,66 +1,48 @@
-/* JFIRE Design System — tokens oficiais */
+/* JFIRE Design System — tokens oficiais (tema claro) */
 :root {
-  /* Unidade proporcional (layout/espaçamento) */
-  --jf-base: 1440;
-  --jf-u: calc(100vw / var(--jf-base));
+  /* Vermelhos */
+  --jf-red: #c43932; /* primário: CTA, kicker, ícone de destaque */
+  --jf-red-deep: #9e2a24; /* hover de CTA, links, texto vermelho pequeno em fundo claro */
+  --jf-red-bright: #e24b4a; /* realce vivo em ícone ou passo ativo. Nunca em texto pequeno */
+  --jf-red-wash: #fbecea; /* fundo da seção Problema, badges de segmento, tints */
+  --jf-wine: #5e1815; /* numerais grandes da seção Números, detalhe no rodapé */
 
-  /* Paleta fogo */
-  --jf-fire-50: #fef2f2;
-  --jf-fire-100: #fee2e2;
-  --jf-fire-200: #fecaca;
-  --jf-fire-300: #fca5a5;
-  --jf-fire-400: #f87171;
-  --jf-fire-500: #dc2626;
-  --jf-fire-600: #b91c1c;
-  --jf-fire-700: #991b1b;
-  --jf-fire-800: #7f1d1d;
-  --jf-fire-900: #450a0a;
+  /* Neutros */
+  --jf-bg: #fbfaf8; /* fundo base da página */
+  --jf-surface: #ffffff; /* cards */
+  --jf-bg-alt: #f1f0ec; /* alternância de seção para dar ritmo */
+  --jf-border: #e4e2dc; /* hairlines, divisórias */
+  --jf-anchor: #4b4b49; /* rodapé (o cinza que substitui o preto) */
+  --jf-ink: #23241f; /* texto principal, grafite, não preto puro */
+  --jf-ink-2: #5f5e5a; /* texto secundário, legendas */
 
-  --jf-ember-400: #fb923c;
-  --jf-ember-500: #f97316;
-  --jf-ember-600: #ea580c;
-  --jf-ember-700: #c2410c;
-  --jf-ember-800: #9a3412;
-
-  --jf-flame-400: #fbbf24;
-  --jf-flame-500: #f59e0b;
-  --jf-flame-600: #d97706;
-
-  /* Neutros / grafite */
-  --jf-ink: #0c0e12;
-  --jf-graphite-900: #151820;
-  --jf-graphite-800: #1e222d;
-  --jf-graphite-700: #2a3040;
-  --jf-graphite-600: #3d4455;
-  --jf-graphite-500: #5c6370;
-  --jf-graphite-400: #8b919d;
-  --jf-graphite-300: #b4b8c0;
-  --jf-graphite-200: #d4d7dc;
-  --jf-graphite-100: #eceef1;
-
-  /* Superfícies */
-  --jf-bg: #ffffff;
-  --jf-surface: #f5f6f7;
-  --jf-surface-raised: #ffffff;
-
-  /* Texto */
-  --jf-text: #151820;
-  --jf-text-mut: #5c6370;
+  /* Texto sobre fundo escuro (rodapé, âncora) */
   --jf-text-inv: #f4f2ee;
-  --jf-text-inv-mut: #b4b8c0;
+  --jf-text-inv-mut: #c9c7c1;
   --jf-on-brand: #ffffff;
 
-  /* Bordas e sombras */
-  --jf-border: #e2e4e8;
-  --jf-border-dark: #2a3040;
-  --jf-shadow-sm: 0 1px 3px rgb(12 14 18 / 12%);
-  --jf-shadow-md: 0 4px 16px rgb(12 14 18 / 18%);
-  --jf-shadow-lg: 0 8px 32px rgb(12 14 18 / 24%);
+  /* Layout */
+  --jf-maxw: 1280px; /* largura máxima do container */
+  /*
+    --jf-u: unidade fluida de layout/espaçamento (100vw / base).
+    O DESIGN_DOC define --jf-u: 1vw literalmente, mas isso satura todo o
+    clamp() tipográfico no teto em qualquer viewport realista, anulando a
+    fluidez pedida na seção 6 (regra crítica). Mantemos a fórmula descrita
+    no comentário do próprio token (100vw / base) usando como base o
+    --jf-maxw (1280), para que os tetos de clamp() sejam atingidos por volta
+    da largura do container. TODO(design-system): confirmar com a fonte do
+    Design System se --jf-u deveria mesmo ser 1vw ou 100vw/1280.
+  */
+  --jf-u: calc(100vw / 1280);
 
-  /* Raio */
-  --jf-radius-sm: 2px;
-  --jf-radius-md: 4px;
-  --jf-radius-lg: 8px;
+  /* Bordas e sombras — estética seca, sem sombras difusas grandes */
+  --jf-shadow-sm: 0 1px 2px rgb(35 36 31 / 8%);
+  --jf-shadow-md: 0 2px 8px rgb(35 36 31 / 10%);
+
+  /* Raio — cantos retos em blocos estruturais, raio maior só em botões */
+  --jf-radius-xs: 2px;
+  --jf-radius-sm: 4px;
+  --jf-radius-md: 6px;
   --jf-radius-pill: 9999px;
 
   /* Tipografia */
@@ -68,13 +50,13 @@
   --jf-font-body: "IBM Plex Sans", system-ui, sans-serif;
   --jf-font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
-  /* WhatsApp (FAB) */
+  /* WhatsApp (FAB, ícones) */
   --jf-whatsapp: #25d366;
   --jf-whatsapp-hover: #1ebe57;
 
-  /* Faixa de segurança */
-  --jf-stripe-yellow: #f59e0b;
-  --jf-stripe-black: #151820;
+  /* Faixa de segurança — usada com parcimônia como divisor/detalhe */
+  --jf-stripe-a: var(--jf-red);
+  --jf-stripe-b: var(--jf-ink);
 
   /* Espaçamento */
   --jf-space-xs: clamp(0.25rem, calc(4 * var(--jf-u)), 0.5rem);
@@ -85,9 +67,8 @@
   --jf-space-2xl: clamp(3rem, calc(72 * var(--jf-u)), 6rem);
 
   /* Container */
-  --jf-container-max: 80rem;
   --jf-container-pad: clamp(1rem, calc(24 * var(--jf-u)), 2rem);
 
-  /* Corte diagonal entre seções */
-  --jf-diagonal: clamp(1.5rem, 4vw, 3rem);
+  /* Corte diagonal entre seções — discreto no tema claro */
+  --jf-diagonal: clamp(1rem, calc(48 * var(--jf-u)), 2.5rem);
 }
