@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import { whatsappUrl } from "../config/site.ts";
 
 const href = whatsappUrl("float");
@@ -11,13 +12,7 @@ const href = whatsappUrl("float");
   rel="noopener noreferrer"
   aria-label="Falar com a JFIRE no WhatsApp"
 >
-  <img
-    src="/public/whatsapp.svg"
-    alt="Falar com a JFIRE no WhatsApp"
-    class="whatsapp-fab__image"
-    width="28"
-    height="28"
-  />
+  <Icon name="whatsapp" width={28} height={28} />
 </a>
 
 <style>

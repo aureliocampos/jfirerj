@@ -1,0 +1,187 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import SectionKicker from "./SectionKicker.astro";
+import WhatsAppLink from "./WhatsAppLink.astro";
+import placeholderImage from "../assets/placeholders/hero.jpg";
+import type { Segment } from "../data/segments.ts";
+
+interface Props {
+  segment: Segment;
+}
+
+const { segment } = Astro.props;
+const titleId = `${segment.id}-title`;
+---
+
+<!-- TODO(cliente): foto real desta seção, ver alt sugerido em src/data/segments.ts -->
+<section
+  id={segment.id}
+  aria-labelledby={titleId}
+  class:list={["segment", "section", `section--${segment.bg}`]}
+>
+  <div
+    class:list={[
+      "container",
+      "segment__grid",
+      { "segment__grid--left": segment.imageSide === "left" },
+    ]}
+  >
+    <div class="segment__text">
+      <SectionKicker label={segment.kicker} variant="wash" />
+      <h2 id={titleId} class="segment__title">{segment.title}</h2>
+      <p class="segment__intro">{segment.intro}</p>
+    </div>
+
+    <figure class="segment__media" data-pending>
+      <Image
+        src={placeholderImage}
+        alt={segment.image.alt}
+        widths={[480, 768, 1024]}
+        sizes="(min-width: 900px) 45vw, 100vw"
+        quality={45}
+        loading="lazy"
+        decoding="async"
+        class="segment__image"
+      />
+    </figure>
+  </div>
+  <div class="container segment__foot">
+    <ul class="segment__pains">
+      {
+        segment.pains.map((pain) => (
+          <li class="segment__pain">
+            <span class="segment__icon" aria-hidden="true">
+              <Icon name={pain.icon} width={24} height={24} />
+            </span>
+            <div>
+              <p class="segment__pain-title">{pain.title}</p>
+              <p class="segment__pain-body">{pain.body}</p>
+            </div>
+          </li>
+        ))
+      }
+      <WhatsAppLink
+        messageKey={segment.ctaKey}
+        ariaLabel={`${segment.ctaLabel} no WhatsApp`}
+      >
+        {segment.ctaLabel}
+      </WhatsAppLink>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .segment__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--jf-space-xl);
+  }
+
+  .segment__text {
+    order: 2;
+  }
+
+  .segment__media {
+    order: 1;
+    margin: 0;
+    border: 1px solid var(--jf-border);
+    border-radius: var(--jf-radius-sm);
+    overflow: hidden;
+    background-color: var(--jf-bg-alt);
+  }
+
+  .segment__image {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .segment__title {
+    font-size: var(--fs-h2);
+    font-weight: 800;
+    color: var(--jf-ink);
+  }
+
+  .segment__intro {
+    color: var(--jf-ink-2);
+    margin-top: var(--jf-space-sm);
+    margin-bottom: var(--jf-space-lg);
+    max-width: 40rem;
+  }
+
+  .segment__pains {
+    display: flex;
+    flex-direction: column;
+    gap: var(--jf-space-lg);
+    margin-bottom: var(--jf-space-lg);
+  }
+
+  .segment__pain {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--jf-space-md);
+  }
+
+  .segment__icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    background-color: var(--jf-red-wash);
+    color: var(--jf-red);
+    border-radius: var(--jf-radius-xs);
+  }
+
+  .segment__pain-title {
+    font-weight: 700;
+    color: var(--jf-ink);
+    margin-bottom: 0.25em;
+  }
+
+  .segment__pain-body {
+    color: var(--jf-ink-2);
+    font-size: 0.9375rem;
+  }
+
+  @media (min-width: 900px) {
+    .segment__grid {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--jf-space-2xl);
+    }
+    #empresas .segment__grid {
+      flex-direction: row-reverse;
+    }
+
+    .segment__text,
+    .segment__media {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
+    .segment__pains {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--jf-space-lg);
+      margin-top: var(--jf-space-xl);
+    }
+
+    .segment__pain {
+      flex-direction: column;
+      padding: var(--jf-space-md);
+      background-color: var(--jf-surface);
+      border: 1px solid var(--jf-border);
+      border-radius: var(--jf-radius-xs);
+    }
+
+    .segment a.btn.btn--primary {
+      display: block;
+      margin-inline: auto;
+      font-size: 32px;
+    }
+  }
+</style>

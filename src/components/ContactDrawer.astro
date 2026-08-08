@@ -42,15 +42,7 @@ const fullAddress = `${BUSINESS.address.street}, ${BUSINESS.address.neighborhood
         <span>{fullAddress}</span>
       </li>
       <li>
-        <img
-          src={`${import.meta.env.BASE_URL}icon-whatsapp.svg`}
-          alt=""
-          width={20}
-          height={20}
-          loading="lazy"
-          decoding="async"
-          class="contact-drawer__list-icon"
-        />
+        <Icon name="whatsapp" width={20} height={20} aria-hidden="true" />
         <span>WhatsApp: {BUSINESS.whatsappDisplay}</span>
       </li>
       <li>
@@ -79,26 +71,12 @@ const fullAddress = `${BUSINESS.address.street}, ${BUSINESS.address.neighborhood
     <ul class="contact-drawer__social">
       <li>
         <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer" aria-label="JFIRE no Facebook">
-          <img
-            src={`${import.meta.env.BASE_URL}icon-facebook.svg`}
-            alt="Facebook"
-            width={36}
-            height={36}
-            loading="lazy"
-            decoding="async"
-          />
+          <Icon name="facebook" width={16} height={16} />
         </a>
       </li>
       <li>
         <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="JFIRE no Instagram">
-          <img
-            src={`${import.meta.env.BASE_URL}icon-instagram.svg`}
-            alt="Instagram"
-            width={36}
-            height={36}
-            loading="lazy"
-            decoding="async"
-          />
+          <Icon name="instagram" width={16} height={16} />
         </a>
       </li>
     </ul>
@@ -276,11 +254,6 @@ const fullAddress = `${BUSINESS.address.street}, ${BUSINESS.address.neighborhood
     color: var(--jf-red-bright);
   }
 
-  .contact-drawer__list-icon {
-    flex-shrink: 0;
-    margin-top: 0.15em;
-  }
-
   .contact-drawer__list a:hover,
   .contact-drawer__list a:focus-visible {
     color: var(--jf-text-inv);
@@ -298,21 +271,22 @@ const fullAddress = `${BUSINESS.address.street}, ${BUSINESS.address.neighborhood
 
   .contact-drawer__social a {
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 2.25rem;
     height: 2.25rem;
+    border: 1px solid rgb(244 242 238 / 25%);
     border-radius: var(--jf-radius-pill);
-    overflow: hidden;
-    transition: transform 0.2s;
+    color: var(--jf-text-inv-mut);
+    transition:
+      color 0.2s,
+      border-color 0.2s;
   }
 
   .contact-drawer__social a:hover,
   .contact-drawer__social a:focus-visible {
-    transform: scale(1.08);
-  }
-
-  .contact-drawer__social img {
-    width: 100%;
-    height: 100%;
+    color: var(--jf-text-inv);
+    border-color: var(--jf-red-bright);
   }
 
   @media (prefers-reduced-motion: reduce) {

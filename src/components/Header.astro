@@ -4,6 +4,8 @@ import WhatsAppLink from "./WhatsAppLink.astro";
 import logo from "../assets/brand/jfire-logo.jpg";
 
 const navLinks = [
+  { href: "#condominios", label: "Condomínios" },
+  { href: "#empresas", label: "Empresas" },
   { href: "#servicos", label: "Serviços" },
   { href: "#como-funciona", label: "Como funciona" },
 ];
@@ -73,9 +75,8 @@ const navLinks = [
 </header>
 
 <script>
-  const toggle = document.querySelector<HTMLButtonElement>(
-    "[data-menu-toggle]",
-  );
+  const toggle =
+    document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
   const nav = document.querySelector<HTMLElement>("[data-menu-nav]");
 
   toggle?.addEventListener("click", () => {
@@ -122,7 +123,7 @@ const navLinks = [
   }
 
   .header__logo :global(img) {
-    height: 2.25rem;
+    height: 3rem;
     width: auto;
     border-radius: var(--jf-radius-xs);
   }

@@ -53,7 +53,9 @@ export type WhatsAppMessageKey =
   | "hero"
   | "services"
   | "how"
-  | "contact";
+  | "contact"
+  | "segment_condos"
+  | "segment_companies";
 
 export const WHATSAPP_MESSAGES: Record<WhatsAppMessageKey, string> = {
   float: "Olá! Vim pelo site e quero falar com a JFire. *[Botão fixo]*",
@@ -63,6 +65,10 @@ export const WHATSAPP_MESSAGES: Record<WhatsAppMessageKey, string> = {
     "Olá! Vim pelo site e quero entender qual sistema minha edificação precisa. *[Serviços]*",
   how: "Olá! Vim pelo site e quero solicitar um diagnóstico. *[Como funciona]*",
   contact: "Olá! Vim pelo site e quero solicitar um orçamento. *[Contato]*",
+  segment_condos:
+    "Olá! Vim pelo site e quero falar sobre o meu condomínio. *[Para Condomínios]*",
+  segment_companies:
+    "Olá! Vim pelo site e quero solicitar uma avaliação da minha empresa. *[Para Empresas]*",
 };
 
 export function absoluteUrl(path: string = ""): string {
