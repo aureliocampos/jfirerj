@@ -14,7 +14,10 @@ export interface Segment {
   title: string;
   intro: string;
   pains: Pain[];
-  image: { alt: string };
+  image: {
+    src: string;
+    alt: string;
+  };
   imageSide: "left" | "right";
   bg: "bg" | "bg-alt";
   ctaKey: WhatsAppMessageKey;
@@ -32,6 +35,7 @@ export const segmentCondos: Segment = {
   ctaKey: "segment_condos",
   ctaLabel: "Falar sobre meu condomínio",
   image: {
+    src: `${import.meta.env.BASE_URL}segmentos/condominios.webp`,
     alt: "Casa de máquinas de incêndio de condomínio, com bombas de pressurização",
   },
   pains: [
@@ -74,6 +78,7 @@ export const segmentCompanies: Segment = {
   ctaKey: "segment_companies",
   ctaLabel: "Solicitar avaliação da minha empresa",
   image: {
+    src: `${import.meta.env.BASE_URL}segmentos/empresas.webp`,
     alt: "Rede de sprinklers instalada no teto de um galpão comercial",
   },
   pains: [

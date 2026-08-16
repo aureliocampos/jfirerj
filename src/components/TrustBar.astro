@@ -5,14 +5,14 @@ import { clients } from "../data/clients.ts";
 <section class="trust-bar section--light" aria-labelledby="trust-bar-title">
   <div class="container">
     <h2 id="trust-bar-title" class="trust-bar__title">
-      Empresas e condomínios que confiam na <strong>JFire</strong>
+      Empresas e Fornecedores que confiam na <strong>JFire</strong>
     </h2>
     <ul class="trust-bar__grid">
       {
         clients.map((client) => (
           <li class="trust-bar__item">
             <img
-              src={`${import.meta.env.BASE_URL}clientes/${client.file}`}
+              src={`${import.meta.env.BASE_URL}/clientes/${client.file}`}
               alt={client.name}
               width={358}
               height={358}
@@ -81,9 +81,6 @@ import { clients } from "../data/clients.ts";
   @media (min-width: 1024px) {
     .trust-bar__grid {
       grid-template-columns: repeat(11, 1fr);
-    }
-    .trust-bar__item {
-      filter: grayscale(1);
     }
 
     .trust-bar__item:hover,

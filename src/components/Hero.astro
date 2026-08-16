@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import SectionKicker from "./SectionKicker.astro";
 import WhatsAppLink from "./WhatsAppLink.astro";
-import heroImage from "../assets/placeholders/hero.jpg";
+import heroImage from "../assets/placeholders/hero.webp";
 ---
 
 <!--
@@ -22,7 +22,7 @@ import heroImage from "../assets/placeholders/hero.jpg";
       </h1>
       <p class="hero__desc">
         A JFire projeta, instala e regulariza sprinkler, alarme, hidrantes e
-        para-raios. Equipe credenciada pelo CREA, CAU e Corpo de Bombeiros, com
+        para-raios. Equipe altamente qualificada, atendimento personalizado, com
         mais de 8 anos protegendo edificações no Rio.
       </p>
       <div class="hero__actions">
@@ -86,7 +86,7 @@ import heroImage from "../assets/placeholders/hero.jpg";
     font-size: var(--fs-body);
     color: var(--jf-ink-2);
     margin-bottom: var(--jf-space-xl);
-    max-width: 34rem;
+    max-width: 30rem;
   }
 
   .hero__actions {
@@ -115,8 +115,7 @@ import heroImage from "../assets/placeholders/hero.jpg";
       padding-block: 120px;
     }
     .hero__grid {
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: var(--jf-space-2xl);
+      grid-template-columns: 1.1fr 1fr;
     }
 
     .hero__media {
