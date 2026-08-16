@@ -7,8 +7,7 @@ via WhatsApp e para SEO/GEO local.
 
 ## Cenário
 
-O site anterior (WordPress) saiu do ar e tinha problemas de performance,
-conteúdo e manutenção. Esta versão concentra tudo em uma página só, com foco em:
+Esta versão tem como objetivo substituir o site anterior (WordPress), concentrando tudo em uma página só, com foco em:
 
 - **Conversão por WhatsApp** (sem formulário, sem backend), com mensagem
   pré-formatada por CTA para identificar a origem do contato.
@@ -16,7 +15,7 @@ conteúdo e manutenção. Esta versão concentra tudo em uma página só, com fo
 - **SEO/GEO local** completo (meta tags, Open Graph, JSON-LD, sitemap).
 - **Acessibilidade** AA.
 - **Estética industrial** de segurança contra incêndio, ancorada no Design
-  System da marca. Nada de cara de template corporativo genérico.
+  System da marca.
 
 ## Stack
 
@@ -32,19 +31,6 @@ npm run dev        # http://localhost:4321
 npm run build      # gera ./dist
 npm run preview    # serve o build localmente
 ```
-
-## Documentação
-
-Antes de desenvolver, leia nesta ordem:
-
-1. **[CLAUDE.md](./CLAUDE.md)** — regras de execução inegociáveis (guardrails,
-   convenções, Definition of Done). É o primeiro arquivo a ler.
-2. **[docs/DESIGN_DOC.md](./docs/DESIGN_DOC.md)** — arquitetura e engenharia:
-   stack, estrutura de pastas, configuração de domínio, tokens, tipografia
-   fluida, direção de arte, sistema de CTAs, SEO/GEO, performance, acessibilidade
-   e deploy.
-3. **[docs/SECTIONS.md](./docs/SECTIONS.md)** — especificação de cada seção:
-   layout, copy pronta em pt-BR, imagens sinalizadas e CTAs.
 
 ## Configuração de domínio
 
@@ -62,14 +48,4 @@ Configuração de domínio.
 - CSS com BEM para classes customizadas; cores, espaçamentos, tipografia e raios
   sempre via tokens `--jf-*`.
 
-## Pendências do cliente
-
-Alguns ativos ainda não foram entregues (logos das empresas, selos de
-credenciamento, foto do Hero, números reais, respostas do FAQ, telefones). Até
-lá, o projeto usa placeholders neutros marcados com `data-pending` /
-`TODO(cliente)`. Lista completa e rastreável no DESIGN_DOC › Pendências.
-
-Ativos de marca de terceiros (logos de clientes e selos oficiais) **não são
-gerados nem simulados** — entram como placeholder até o cliente enviar os
-arquivos reais.
 # jfirerj
