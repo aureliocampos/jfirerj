@@ -1,6 +1,6 @@
 export const SITE_URL =
-  import.meta.env.SITE_URL ?? "https://aureliocampos.github.io";
-export const BASE_PATH = import.meta.env.BASE_PATH ?? "/jfirerj/";
+  import.meta.env.SITE_URL ?? "https://jfirerj.com.br";
+export const BASE_PATH = import.meta.env.BASE_PATH ?? "/";
 
 export const WHATSAPP_NUMBER = "5521969641666";
 /** Telefone de exibição no Contato/Rodapé. Não é destino de CTA. */

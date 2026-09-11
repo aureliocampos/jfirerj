@@ -20,7 +20,8 @@ Esta versão tem como objetivo substituir o site anterior (WordPress), concentra
 ## Stack
 
 - [Astro](https://astro.build) — saída 100% estática.
-- Hospedagem em **GitHub Pages** (deploy via GitHub Actions no merge para `main`).
+- Hospedagem no **cPanel** do cliente, deploy automático via GitHub Actions
+  (build no runner + envio do `dist/` por FTPS a cada push em `main`).
 - CSS puro sobre os design tokens `--jf-*`.
 
 ## Começando
@@ -35,10 +36,18 @@ npm run preview    # serve o build localmente
 ## Configuração de domínio
 
 Todo o comportamento de URL é controlado em `src/config/site.ts`
-(`SITE_URL`, `BASE_PATH`). Enquanto o domínio final não é reapontado, o site roda
-no GitHub Pages. A migração para `jfirerj.com.br` é uma troca de variável e a
-adição de um `CNAME`, sem mexer no restante do código. Detalhes no DESIGN_DOC ›
-Configuração de domínio.
+(`SITE_URL`, `BASE_PATH`), com default para `https://jfirerj.com.br` na raiz
+(`/`), já que o site é publicado diretamente no `public_html` do cPanel do
+cliente.
+
+## Deploy
+
+Deploy automático via GitHub Actions a cada push em `main`
+(`.github/workflows/deploy.yml`): a build roda inteira no runner (Node
+completo) e só o `dist/` é enviado por FTPS ao cPanel — dispensa Node no
+servidor. Requer os secrets `FTP_SERVER`, `FTP_USERNAME` e `FTP_PASSWORD`
+cadastrados no repositório, apontando para uma conta FTP dedicada (restrita ao
+diretório de destino, não o usuário master do cPanel).
 
 ## Convenções
 
